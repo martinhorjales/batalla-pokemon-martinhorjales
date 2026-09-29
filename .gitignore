@@ -1,0 +1,55 @@
+# Dependencias
+node_modules/
+vendor/
+
+# Variables de entorno
+.env
+.env.*
+!.env.example
+
+# Logs
+*.log
+logs/
+
+# Archivos del sistema
+.DS_Store
+Thumbs.db
+
+# IDEs / editores
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos temporales
+tmp/
+temp/
+*.tmp
+*.cache
+
+# Builds / compilados
+dist/
+build/
+out/
+target/
+
+# Cobertura de tests
+coverage/
+.nyc_output/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+env/
+
+# Java
+*.class
+
+# OS / herramientas
+*.iml
+
+# Archivos locales
+local/
