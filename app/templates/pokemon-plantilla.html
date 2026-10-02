@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pokémon Grid</title>
+    
+    <!-- Tailwind CSS (CDN para uso rápido) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Fuentes de Google: Ubuntu y una fuente Pixelada -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap" rel="stylesheet">
+
+    <!-- Estilos personalizados referenciados en tu código -->
+    <style>
+        .pixel-font {
+            font-family: 'Press Start 2P', system-ui;
+        }
+        
+        .text-shadow-custom {
+            text-shadow: 1px 1px 0px rgba(0, 0, 0, 0.8);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.5);
+            border-color: #ef4444; /* Borde rojo al pasar el ratón (opcional) */
+        }
+    </style>
+</head>
+<body class="bg-gray-950 min-h-screen p-8 antialiased">
+
+    <!-- Contenedor principal para centrar el grid en la pantalla -->
+    <div class="max-w-7xl mx-auto">
+        
+        <!-- Contenedor GRID: Muestra 1 columna en móvil, 2 en tablets, 3 o 4 en pantallas grandes -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+
+            <!-- ========================================================================= -->
+            <!-- INICIO ELEMENTO REPETIBLE (Iterar aquí con Thymeleaf, Vue, React, JSON) -->
+            <!-- La tarjeta es un tag <a> para que todo el bloque sea clickable hacia detalles -->
+            <!-- ========================================================================= -->
+            <a href="/pokemons/detalles/4" class="card-hover bg-gray-900/80 backdrop-blur-sm border-2 border-gray-700 rounded-2xl p-5 flex flex-col items-center transition-all duration-300 relative overflow-hidden group">
+                
+                <!-- ID del Pokémon (Esquina superior izquierda) -->
+                <span class="absolute top-3 left-4 text-gray-500 pixel-font text-[10px] font-bold z-10">
+                    #004
+                </span>
+
+                <!-- Imagen del Pokémon (Usando Official Artwork para mejor resolución en cards) -->
+                <div class="w-full h-32 flex justify-center items-center mt-4 mb-4 relative z-10">
+                    <!-- Círculo difuminado de fondo para dar contraste -->
+                    <div class="absolute w-24 h-24 bg-white/5 rounded-full blur-md"></div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png" 
+                         alt="Charmander" 
+                         class="h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300 z-10" />
+                </div>
+
+                <!-- Nombre del Pokémon -->
+                <h2 class="text-xl font-bold text-white mb-4 z-10 font-['Ubuntu'] uppercase tracking-widest">
+                    Charmander
+                </h2>
+
+                <!-- Tipos del Pokémon -->
+                <div class="flex flex-wrap justify-center gap-2 z-10 w-full mt-auto">
+                    <!-- Píldora de Tipo (Ej: Fuego) -->
+                    <span class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]">
+                        FUEGO
+                    </span>
+                    <!-- Si tuviera otro tipo, se añadiría aquí. Ej: Volador -->
+                </div>
+            </a>
+            <!-- ========================================================================= -->
+            <!-- FIN ELEMENTO REPETIBLE -->
+            
+            <!-- Ejemplo visual de una segunda tarjeta para ver cómo funciona el Grid -->
+            <a href="/pokemons/detalles/1" class="card-hover bg-gray-900/80 backdrop-blur-sm border-2 border-gray-700 rounded-2xl p-5 flex flex-col items-center transition-all duration-300 relative overflow-hidden group">
+                <span class="absolute top-3 left-4 text-gray-500 pixel-font text-[10px] font-bold z-10">#001</span>
+                <div class="w-full h-32 flex justify-center items-center mt-4 mb-4 relative z-10">
+                    <div class="absolute w-24 h-24 bg-white/5 rounded-full blur-md"></div>
+                    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png" alt="Bulbasaur" class="h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300 z-10" />
+                </div>
+                <h2 class="text-xl font-bold text-white mb-4 z-10 font-['Ubuntu'] uppercase tracking-widest">Bulbasaur</h2>
+                <div class="flex flex-wrap justify-center gap-2 z-10 w-full mt-auto">
+                    <span class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]">PLANTA</span>
+                    <span class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]">VENENO</span>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</body>
+</html>
