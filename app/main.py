@@ -25,7 +25,7 @@ def paginaInicio():
 
 @app.route("/pokemons")
 def listadoPokemons():
-    return render_template("pokemons.html",DATOS=DATOS)
+    return render_template("pokemons.html", DATOS=DATOS)
 
 
 @app.route("/pokemons/ID/<int:id>")
@@ -33,12 +33,7 @@ def listarPokemon(id):
 
     pokemon_seleccionado = next((p for p in DATOS if p.get("id") == id), None)
 
-    return render_template("pokemon.html",pokemon=pokemon_seleccionado)
-
-
-# @app.route("/p")
-# def home():
-#     return jsonify(DATOS)
+    return render_template("pokemon.html", pokemon=pokemon_seleccionado)
 
 
 if __name__ == "__main__":
