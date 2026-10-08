@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Battle Arena - Pokémon</title>
+
+    <!-- Enlace a tu CSS personalizado -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pagina-principal.css') }}">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap"
+        rel="stylesheet">
+
+    <style>
+        .pixel-font {
+            font-family: 'Press Start 2P', monospace;
+        }
+
+        .hp-bar-fill {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col justify-between items-center relative p-4 bg-gray-950">
+
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20 pointer-events-none">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl mix-blend-screen"></div>
+        <div class="absolute bottom-10 right-10 w-48 h-48 bg-red-500 rounded-full blur-3xl mix-blend-screen"></div>
+        <div
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500 rounded-full blur-3xl mix-blend-screen opacity-10">
+        </div>
+    </div>
+
+    <!-- Header: Trainer Info -->
+    <header class="w-full max-w-5xl text-center mt-4">
+        <h2 class="text-yellow-400 font-bold uppercase tracking-widest text-lg md:text-xl drop-shadow-md"
+            style="font-family: 'Bangers', cursive; letter-spacing: 2px;">
+            Trainer <span class="text-white text-2xl">ASH</span> vs Rival!
+        </h2>
+    </header>
+
+    <!-- Battle Arena Container -->
+    <main
+        class="w-full max-w-4xl mx-auto relative z-10 border-2 border-gray-700/80 rounded-3xl shadow-[0_0_30px_rgba(0,0,0,0.8)] mt-4 bg-cover bg-center bg-no-repeat overflow-hidden h-[450px] md:h-[500px]"
+        style="background-image: linear-gradient(rgba(17, 24, 39, 0.4), rgba(17, 24, 39, 0.4)), url('{{ url_for('static', filename='img/fondo-batalla-pokemon.jpg') }}');">
+
+        <!-- Rival Stats Box (Top Left) -->
+        <div class="absolute top-6 left-6 md:top-10 md:left-10 z-30">
+            <div
+                class="bg-gray-100/90 border-4 border-gray-800 rounded-xl p-3 md:p-4 shadow-lg w-64 md:w-80 transform -skew-x-6">
+                <div class="flex justify-between items-center mb-2 transform skew-x-6">
+                    <span class="text-gray-900 font-bold uppercase pixel-font text-[10px] md:text-xs">
+                        CHARIZARD
+                    </span>
+                    <span class="text-gray-900 font-bold pixel-font text-[10px] md:text-xs">Lv20</span>
+                </div>
+                <!-- HP Bar -->
+                <div
+                    class="w-full bg-gray-800 rounded-full h-3 md:h-4 border-2 border-gray-900 transform skew-x-6 overflow-hidden mb-2">
+                    <div class="bg-green-500 h-full hp-bar-fill" style="width: 100%;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rival Sprite (Top Right - Ubicado en el círculo rosa superior) -->
+        <div class="absolute top-[25%] right-[0%] md:top-[20%] md:right-[38%] z-10 flex flex-col items-center">
+            <div class="absolute bottom-0 w-24 md:w-32 h-6 bg-black/40 rounded-[100%] filter blur-sm"></div>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/6.gif"
+                alt="Rival Pokemon" class="w-24 md:w-36 h-auto object-contain drop-shadow-2xl relative z-10" />
+        </div>
+
+        <!-- Player Sprite (Bottom Left - Ubicado en el círculo rosa inferior) -->
+        <div class="absolute bottom-[20%] left-[25%] md:bottom-[10%] md:left-[25%] z-20 flex flex-col items-center">
+            <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/50 rounded-[100%] filter blur-sm"></div>
+            <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/back/9.gif"
+                alt="Player Pokemon" class="w-32 md:w-48 h-auto object-contain drop-shadow-2xl relative z-10" />
+        </div>
+
+        <!-- Player Stats Box (Bottom Right) -->
+        <div class="absolute bottom-6 right-6 md:bottom-10 md:right-10 z-30">
+            <div
+                class="bg-gray-100/90 border-4 border-gray-800 rounded-xl p-3 md:p-4 shadow-lg w-64 md:w-80 transform -skew-x-6">
+                <div class="flex justify-between items-center mb-2 transform skew-x-6">
+                    <span class="text-gray-900 font-bold uppercase pixel-font text-[10px] md:text-xs">
+                        BLASTOISE
+                    </span>
+                    <span class="text-gray-900 font-bold pixel-font text-[10px] md:text-xs">Lv20</span>
+                </div>
+                <!-- HP Bar -->
+                <div
+                    class="w-full bg-gray-800 rounded-full h-3 md:h-4 border-2 border-gray-900 transform skew-x-6 overflow-hidden mb-2">
+                    <div class="bg-green-500 h-full hp-bar-fill" style="width: 100%;"></div>
+                </div>
+                <!-- HP Numbers -->
+                <div class="text-right text-gray-800 font-bold pixel-font text-[9px] transform skew-x-6">
+                    60 / 60 HP
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- ACTION MENU (4 Attacks) -->
+    <div class="w-full max-w-4xl mx-auto mt-6 mb-24 z-10 flex-shrink-0 relative">
+        <div class="bg-gray-900/80 border-4 border-gray-700 p-4 rounded-xl shadow-[0_0_20px_rgba(0,0,0,0.5)]">
+            <h3 class="text-white pixel-font text-xs md:text-sm mb-4 text-center">What will you do?</h3>
+
+            <!-- Grid de 4 botones para los ataques -->
+            <div class="grid grid-cols-2 gap-3 md:gap-4">
+
+                <!-- Attack 1 -->
+                <button
+                    class="bg-blue-600 hover:bg-blue-500 border-2 border-blue-400 text-white rounded-lg p-3 md:p-4 transition-all hover:scale-105 active:scale-95 shadow-md group">
+                    <span
+                        class="pixel-font text-[10px] md:text-xs uppercase drop-shadow-md group-hover:text-yellow-300">
+                        Hydro Pump
+                    </span>
+                </button>
+
+                <!-- Attack 2 -->
+                <button
+                    class="bg-gray-600 hover:bg-gray-500 border-2 border-gray-400 text-white rounded-lg p-3 md:p-4 transition-all hover:scale-105 active:scale-95 shadow-md group">
+                    <span
+                        class="pixel-font text-[10px] md:text-xs uppercase drop-shadow-md group-hover:text-yellow-300">
+                        Skull Bash
+                    </span>
+                </button>
+
+                <!-- Attack 3 -->
+                <button
+                    class="bg-cyan-600 hover:bg-cyan-500 border-2 border-cyan-400 text-white rounded-lg p-3 md:p-4 transition-all hover:scale-105 active:scale-95 shadow-md group">
+                    <span
+                        class="pixel-font text-[10px] md:text-xs uppercase drop-shadow-md group-hover:text-yellow-300">
+                        Ice Beam
+                    </span>
+                </button>
+
+                <!-- Attack 4 -->
+                <button
+                    class="bg-purple-700 hover:bg-purple-600 border-2 border-purple-400 text-white rounded-lg p-3 md:p-4 transition-all hover:scale-105 active:scale-95 shadow-md group">
+                    <span
+                        class="pixel-font text-[10px] md:text-xs uppercase drop-shadow-md group-hover:text-yellow-300">
+                        Bite
+                    </span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <footer
+        class="w-full text-center z-10 mt-16 md:absolute md:bottom-6 md:mt-0 text-xs md:text-sm text-gray-300 font-medium tracking-wide">
+        <div
+            class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl md:rounded-full px-4 md:px-6 py-3 inline-flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-auto">
+            <span><span class="text-yellow-400 font-bold">Project:</span> {{nombre_proyecto}}</span>
+            <span class="hidden md:inline mx-3 text-gray-600">|</span>
+            <span><span class="text-blue-400 font-bold">Created by:</span> {{nombre}}</span>
+            <span class="hidden md:inline mx-3 text-gray-600">|</span>
+            <span><span class="text-red-400 font-bold">Year of creation:</span> {{año}}</span>
+        </div>
+    </footer>
+
+</body>
+
+</html>

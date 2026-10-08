@@ -23,6 +23,11 @@ def paginaInicio():
     return render_template("pagina-principal.html", nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
 
 
+@app.route("/identificacion")
+def identificarse():
+    return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
+
+
 @app.route("/pokemons")
 def listadoPokemons():
     return render_template("pokemons.html", DATOS=DATOS)
@@ -34,6 +39,11 @@ def listarPokemon(id):
     pokemon_seleccionado = next((p for p in DATOS if p.get("id") == id), None)
 
     return render_template("pokemon.html", pokemon=pokemon_seleccionado)
+
+
+@app.route("/batalla-pokemon")
+def combatir():
+    return render_template("batalla-pokemon.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
 
 
 if __name__ == "__main__":

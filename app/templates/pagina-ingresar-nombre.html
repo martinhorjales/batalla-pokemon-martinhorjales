@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trainer Registration - Pokémon Battles</title>
+
+    <!-- Enlace a tu CSS personalizado (Mantenido igual) -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/pagina-principal.css') }}">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="min-h-screen flex flex-col justify-center items-center relative p-4 bg-gray-950">
+
+    <!-- Decorative background elements -->
+    <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20 pointer-events-none">
+        <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl mix-blend-screen"></div>
+        <div class="absolute bottom-10 right-10 w-48 h-48 bg-red-500 rounded-full blur-3xl mix-blend-screen"></div>
+        <div
+            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500 rounded-full blur-3xl mix-blend-screen opacity-10">
+        </div>
+    </div>
+
+    <main class="w-full max-w-4xl mx-auto flex flex-col items-center justify-center space-y-10 z-10">
+
+        <header class="text-center space-y-4">
+            <span class="text-yellow-400 font-bold uppercase tracking-widest text-sm md:text-base mb-2 block">
+                ♦ NEW CHALLENGER APPROACHING ♦
+            </span>
+            <h1
+                class="title-font text-5xl md:text-7xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 filter drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] pb-2">
+                Identify Yourself!
+            </h1>
+            <p class="text-gray-300 text-lg md:text-xl max-w-xl mx-auto mt-4 drop-shadow-md font-ubuntu">
+                Every great Pokémon master starts with a name. Tell us yours before entering the arena.
+            </p>
+        </header>
+
+        <!-- Mascot Image -->
+        <div class="relative floating flex flex-col items-center my-4">
+            <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/50 rounded-[100%] filter blur-sm"></div>
+            <!-- Pikachu Sprite -->
+            <img src="{{ DATOS[0].get('sprites').get('front_shiny') }}" alt="Imagen de {{ DATOS[0].get('name') }}"
+                class="h-72 w-auto object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300 z-10" />
+        </div>
+
+        <!-- Trainer Name Form -->
+        <!-- <form action="{#{{ url_for('siguiente_pantalla') }}#}" method="POST"
+            class="w-full flex flex-col items-center justify-center space-y-8"> -->
+
+        <div class="relative w-full max-w-md group">
+            <!-- Glowing effect behind input -->
+            <div
+                class="absolute -inset-1 bg-gradient-to-r from-red-500 via-yellow-500 to-blue-500 rounded-xl blur opacity-25 group-focus-within:opacity-75 transition duration-500">
+            </div>
+
+            <input type="text" name="trainer_name" id="trainer_name" placeholder="ENTER YOUR NAME..." maxlength="15"
+                required autocomplete="off"
+                class="relative w-full bg-gray-900 border-2 border-gray-700 text-white text-center text-xl md:text-2xl px-6 py-4 rounded-xl focus:outline-none focus:border-yellow-400 placeholder-gray-600 transition-colors uppercase font-bold tracking-widest"
+                style="font-family: 'Press Start 2P', monospace; font-size: 1rem;">
+        </div>
+
+        <!-- Submit Button (Usando tu clase .game-button) -->
+        <button type="submit"
+            class="game-button rounded-full w-64 md:w-80 h-20 md:h-24 flex items-center justify-center group cursor-pointer border-none bg-transparent">
+            <span
+                class="relative z-20 text-white font-bold text-xl md:text-2xl uppercase tracking-wider text-shadow-custom pt-1 group-hover:text-yellow-300 transition-colors"
+                style="font-family: 'Bangers', cursive; letter-spacing: 2px;">
+                Continue
+            </span>
+        </button>
+        </form>
+
+    </main>
+
+    <footer
+        class="w-full text-center z-10 mt-16 md:absolute md:bottom-6 md:mt-0 text-xs md:text-sm text-gray-300 font-medium tracking-wide">
+        <div
+            class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl md:rounded-full px-4 md:px-6 py-3 inline-flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-auto">
+            <span><span class="text-yellow-400 font-bold">Project:</span> {{nombre_proyecto}}</span>
+            <span class="hidden md:inline mx-3 text-gray-600">|</span>
+            <span><span class="text-blue-400 font-bold">Created by:</span> {{nombre}}</span>
+            <span class="hidden md:inline mx-3 text-gray-600">|</span>
+            <span><span class="text-red-400 font-bold">Year of creation:</span> {{año}}</span>
+        </div>
+    </footer>
+
+</body>
+
+</html>
