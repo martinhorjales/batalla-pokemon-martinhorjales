@@ -1,111 +1,56 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base-pokemon.html"%}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página Principal - Batallas Pokémon</title>
+{% block content %}
+<header class="text-center space-y-4">
+    <span class="text-yellow-400 font-bold uppercase tracking-widest text-sm md:text-base mb-2 block">
+        ♦ POKÉMON BATTLE ♦
+    </span>
+    <h1
+        class="title-font text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 filter drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] pb-2">
+        Enter the Pokémon Arena!
+    </h1>
+    <p class="text-gray-300 text-lg md:text-2xl max-w-2xl mx-auto mt-4 drop-shadow-md">
+        Prepare your team, plan your strategy, and face the strongest trainers in the world.
+    </p>
+</header>
 
+<div class="w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 my-8">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pagina-principal.css') }}">
-
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap"
-        rel="stylesheet">
-
-
-</head>
-
-<body class="min-h-screen flex flex-col justify-center items-center relative p-4">
-
-    <!-- Decorative background elements -->
-    <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20 pointer-events-none">
-        <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl mix-blend-screen"></div>
-        <div class="absolute bottom-10 right-10 w-48 h-48 bg-red-500 rounded-full blur-3xl mix-blend-screen"></div>
+    <div class="relative floating flex flex-col items-center">
+        <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/40 rounded-[100%] filter blur-sm"></div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif"
+            alt="Charmander Animado"
+            class="w-24 md:w-32 h-auto object-contain drop-shadow-2xl z-10 transform scale-x-[-1]" />
         <div
-            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-yellow-500 rounded-full blur-3xl mix-blend-screen opacity-10">
+            class="mt-4 bg-gray-900/80 border border-gray-700 px-4 py-1 rounded-full text-sm font-bold text-red-400 pixel-font text-[10px] md:text-xs">
+            Lv. 20
         </div>
     </div>
 
-    <main class="w-full max-w-5xl mx-auto flex flex-col items-center justify-center space-y-12 z-10">
+    <div
+        class="z-20 text-4xl md:text-6xl title-font text-red-500 text-shadow-custom transform -rotate-12 animate-pulse">
+        VS
+    </div>
 
-        <header class="text-center space-y-4">
-            <span class="text-yellow-400 font-bold uppercase tracking-widest text-sm md:text-base mb-2 block">
-                ♦ POKÉMON BATTLE ♦
-            </span>
-            <h1
-                class="title-font text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 filter drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] pb-2">
-                Enter the Pokémon Arena!
-            </h1>
-            <p class="text-gray-300 text-lg md:text-2xl max-w-2xl mx-auto mt-4 drop-shadow-md">
-                Prepare your team, plan your strategy, and face the strongest trainers in the world.
-            </p>
-        </header>
-
-        <div class="w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 my-8">
-
-            <!-- Player 1 / Left Pokémon (Charmander) -->
-            <div class="relative floating flex flex-col items-center">
-                <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/40 rounded-[100%] filter blur-sm"></div>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif"
-                    alt="Charmander Animado"
-                    class="w-24 md:w-32 h-auto object-contain drop-shadow-2xl z-10 transform scale-x-[-1]" />
-                <div
-                    class="mt-4 bg-gray-900/80 border border-gray-700 px-4 py-1 rounded-full text-sm font-bold text-red-400 pixel-font text-[10px] md:text-xs">
-                    Lv. 20
-                </div>
-            </div>
-
-            <!-- VS Badge -->
-            <div
-                class="z-20 text-4xl md:text-6xl title-font text-red-500 text-shadow-custom transform -rotate-12 animate-pulse">
-                VS
-            </div>
-
-            <!-- Player 2 / Right Pokémon (Squirtle) -->
-            <div class="relative floating-delayed flex flex-col items-center">
-                <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/40 rounded-[100%] filter blur-sm"></div>
-                <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/7.gif"
-                    alt="Squirtle Animado" class="w-24 md:w-32 h-auto object-contain drop-shadow-2xl z-10" />
-                <div
-                    class="mt-4 bg-gray-900/80 border border-gray-700 px-4 py-1 rounded-full text-sm font-bold text-blue-400 pixel-font text-[10px] md:text-xs">
-                    Lv. 20
-                </div>
-            </div>
-
-        </div>
-
-        <div class="mt-12 flex flex-col items-center justify-center w-full">
-            <a href="{{ url_for('listadoPokemons') }}"
-                class="game-button rounded-full w-64 md:w-80 h-20 md:h-24 flex items-center justify-center group cursor-pointer">
-                <!-- Text overlay for the button, placed securely above the ::before/::after elements -->
-                <span
-                    class="relative z-20 text-white font-bold text-xl md:text-2xl uppercase tracking-wider text-shadow-custom pt-1 group-hover:text-yellow-300 transition-colors">
-                    Start
-                </span>
-            </a>
-        </div>
-
-    </main>
-
-    <footer
-        class="w-full text-center z-10 mt-16 md:absolute md:bottom-6 md:mt-0 text-xs md:text-sm text-gray-300 font-medium tracking-wide">
+    <div class="relative floating-delayed flex flex-col items-center">
+        <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/40 rounded-[100%] filter blur-sm"></div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/7.gif"
+            alt="Squirtle Animado" class="w-24 md:w-32 h-auto object-contain drop-shadow-2xl z-10" />
         <div
-            class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl md:rounded-full px-4 md:px-6 py-3 inline-flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-auto">
-            <span><span class="text-yellow-400 font-bold">Project:</span> {{nombre_proyecto}}</span>
-            <span class="hidden md:inline mx-3 text-gray-600">|</span>
-            <span><span class="text-blue-400 font-bold">Created by:</span> {{nombre}}</span>
-            <span class="hidden md:inline mx-3 text-gray-600">|</span>
-            <span><span class="text-red-400 font-bold">Year of creation:</span> {{año}}</span>
+            class="mt-4 bg-gray-900/80 border border-gray-700 px-4 py-1 rounded-full text-sm font-bold text-blue-400 pixel-font text-[10px] md:text-xs">
+            Lv. 20
         </div>
-    </footer>
+    </div>
 
-</body>
+</div>
 
-</html>
+<div class="mt-12 flex flex-col items-center justify-center w-full">
+    <a href="{{ url_for('listadoPokemons') }}"
+        class="game-button rounded-full w-64 md:w-80 h-20 md:h-24 flex items-center justify-center group cursor-pointer">
+        <span
+            class="relative z-20 text-white font-bold text-xl md:text-2xl uppercase tracking-wider text-shadow-custom pt-1 group-hover:text-yellow-300 transition-colors">
+            Start
+        </span>
+    </a>
+</div>
+{% endblock %}

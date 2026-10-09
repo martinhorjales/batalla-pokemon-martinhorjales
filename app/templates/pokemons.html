@@ -1,200 +1,143 @@
-<!DOCTYPE html>
-<html lang="es">
+{% extends "base-pokemon.html" %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pokémon list - Pokémon battle</title>
+{% block header %}
+<header
+    class="absolute top-10 w-full max-w-7xl mx-auto pt-4 pb-4 px-6 flex flex-col md:flex-row items-center justify-between z-10 gap-4">
 
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/pokemons.css') }}">
+    <a href="{{ url_for('paginaInicio') }}"
+        class="text-gray-400 hover:text-yellow-400 transition-colors pixel-font text-[10px] md:text-xs flex items-center gap-2 self-start md:self-center">
+        <span>&lt;</span> RETURN
+    </a>
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <h1
+        class="title-font text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 filter drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] text-center">
+        Pokémon list
+    </h1>
 
-    <!-- Google Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&family=Ubuntu:wght@400;700&display=swap"
-        rel="stylesheet">
+    <div class="hidden md:block w-20"></div>
+</header>
+{% endblock %}
 
-</head>
+{% block content %}
+<main class="w-full max-w-7xl mx-auto px-6 py-8 z-10 flex-grow">
 
-<body class="min-h-screen flex flex-col relative pb-24">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
+        {% for pokemon in DATOS %}
 
-    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10 opacity-20 pointer-events-none">
-        <div class="absolute top-10 left-10 w-32 h-32 bg-blue-500 rounded-full blur-3xl mix-blend-screen"></div>
-        <div class="absolute bottom-10 right-10 w-48 h-48 bg-red-500 rounded-full blur-3xl mix-blend-screen"></div>
-    </div>
+        <a href="{{ url_for('listarPokemon', id=pokemon.get('id')) }}"
+            class="card-hover bg-gray-900/80 backdrop-blur-sm border-2 border-gray-700 rounded-2xl p-5 flex flex-col items-center transition-all duration-300 relative overflow-hidden group">
 
-    <header
-        class="w-full max-w-7xl mx-auto pt-8 pb-4 px-6 flex flex-col md:flex-row items-center justify-between z-10 gap-4">
-        <!-- Botón para volver al Index -->
-        <a href="{{ url_for('paginaInicio') }}"
-            class="text-gray-400 hover:text-yellow-400 transition-colors pixel-font text-[10px] md:text-xs flex items-center gap-2 self-start md:self-center">
-            <span>&lt;</span> RETURN
-        </a>
+            <span class="absolute top-3 left-4 text-gray-500 pixel-font text-[10px] font-bold z-10">
+                #{{ pokemon.get("id") }}
+            </span>
 
-        <!-- Título -->
-        <h1
-            class="title-font text-5xl md:text-6xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 filter drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] text-center">
-            Pokémon list
-        </h1>
+            <div class="w-full h-32 flex justify-center items-center mt-4 mb-4 relative z-10">
+                <div class="absolute w-24 h-24 bg-white/5 rounded-full blur-md"></div>
+                <img src="{{ pokemon.get('sprites').get('front_default') }}" alt="Imagen de {{ pokemon.get('name') }}"
+                    class="h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300 z-10" />
+            </div>
 
-        <!-- Espaciador invisible para centrar el título en desktop -->
-        <div class="hidden md:block w-20"></div>
-    </header>
+            <h2 class="text-xl font-bold text-white mb-4 z-10 font-['Ubuntu'] uppercase tracking-widest">
+                {{ pokemon.get("name") }}
+            </h2>
 
-    <main class="w-full max-w-7xl mx-auto px-6 py-8 z-10 flex-grow">
-
-        <!-- Contenedor GRID: Muestra 1 columna en móvil, 2 en tablets, 3 o 4 en pantallas grandes -->
-        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
-            {% for pokemon in DATOS %}
-
-            <!-- ========================================================================= -->
-            <!-- INICIO ELEMENTO REPETIBLE (Iterar aquí con Thymeleaf, Vue, React, JSON) -->
-            <!-- La tarjeta es un tag <a> para que todo el bloque sea clickable hacia detalles -->
-            <!-- ========================================================================= -->
-            <a href="{{ url_for('listarPokemon', id=pokemon.get('id')) }}"
-                class="card-hover bg-gray-900/80 backdrop-blur-sm border-2 border-gray-700 rounded-2xl p-5 flex flex-col items-center transition-all duration-300 relative overflow-hidden group">
-
-                <!-- ID del Pokémon (Esquina superior izquierda) -->
-                <span class="absolute top-3 left-4 text-gray-500 pixel-font text-[10px] font-bold z-10">
-                    #{{ pokemon.get("id") }}
+            <div class="flex flex-wrap justify-center gap-2 z-10 w-full mt-auto">
+                {% set tipo = pokemon.get("types")[0].upper() %}
+                <span {% if tipo=="BUG" %}
+                    class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
+                    {% elif tipo=="DARK" %}
+                    class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
+                    {% elif tipo=="DRAGON" %}
+                    class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+                    {% elif tipo=="ELECTRIC" %}
+                    class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
+                    {% elif tipo=="FAIRY" %}
+                    class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
+                    {% elif tipo=="FIGHTING" %}
+                    class="bg-red-800/20 text-red-500 border border-red-800/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
+                    {% elif tipo=="FIRE" %}
+                    class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
+                    {% elif tipo=="FLYING" %}
+                    class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
+                    {% elif tipo=="GHOST" %}
+                    class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
+                    {% elif tipo=="GRASS" %}
+                    class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
+                    {% elif tipo=="GROUND" %}
+                    class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
+                    {% elif tipo=="ICE" %}
+                    class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
+                    {% elif tipo=="NORMAL" %}
+                    class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
+                    {% elif tipo=="POISON" %}
+                    class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
+                    {% elif tipo=="PSYCHIC" %}
+                    class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
+                    {% elif tipo=="ROCK" %}
+                    class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
+                    {% elif tipo=="STEEL" %}
+                    class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
+                    {% elif tipo=="WATER" %}
+                    class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
+                    {% else %}
+                    class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
+                    {% endif %}>
+                    {{ tipo }}
                 </span>
 
-                <!-- Imagen del Pokémon (Usando Official Artwork para mejor resolución en cards) -->
-                <div class="w-full h-32 flex justify-center items-center mt-4 mb-4 relative z-10">
-                    <!-- Círculo difuminado de fondo para dar contraste -->
-                    <div class="absolute w-24 h-24 bg-white/5 rounded-full blur-md"></div>
-                    <img src="{{ pokemon.get('sprites').get('front_default') }}"
-                        alt="Imagen de {{ pokemon.get('name') }}"
-                        class="h-full object-contain drop-shadow-[0_10px_10px_rgba(0,0,0,0.6)] group-hover:scale-110 transition-transform duration-300 z-10" />
-                </div>
+                {% if pokemon.get("types")[1] %}
+                {% set tipo = pokemon.get("types")[1].upper() %}
+                <span {% if tipo=="BUG" %}
+                    class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
+                    {% elif tipo=="DARK" %}
+                    class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
+                    {% elif tipo=="DRAGON" %}
+                    class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
+                    {% elif tipo=="ELECTRIC" %}
+                    class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
+                    {% elif tipo=="FAIRY" %}
+                    class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
+                    {% elif tipo=="FIGHTING" %}
+                    class="bg-red-800/20 text-red-500 border border-red-800/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
+                    {% elif tipo=="FIRE" %}
+                    class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
+                    {% elif tipo=="FLYING" %}
+                    class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
+                    {% elif tipo=="GHOST" %}
+                    class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
+                    {% elif tipo=="GRASS" %}
+                    class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
+                    {% elif tipo=="GROUND" %}
+                    class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
+                    {% elif tipo=="ICE" %}
+                    class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
+                    {% elif tipo=="NORMAL" %}
+                    class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
+                    {% elif tipo=="POISON" %}
+                    class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
+                    {% elif tipo=="PSYCHIC" %}
+                    class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
+                    {% elif tipo=="ROCK" %}
+                    class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
+                    {% elif tipo=="STEEL" %}
+                    class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
+                    {% elif tipo=="WATER" %}
+                    class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
+                    {% else %}
+                    class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
+                    {% endif %}>
+                    {{ tipo }}
+                </span>
+                {% endif %}
 
-                <!-- Nombre del Pokémon -->
-                <h2 class="text-xl font-bold text-white mb-4 z-10 font-['Ubuntu'] uppercase tracking-widest">
-                    {{ pokemon.get("name") }}
-                </h2>
-
-                <!-- Tipos del Pokémon -->
-                <div class="flex flex-wrap justify-center gap-2 z-10 w-full mt-auto">
-                    <!-- Píldora de Tipo (Ej: Fuego) -->
-                    {% set tipo = pokemon.get("types")[0].upper() %}
-                    <span {% if tipo=="BUG" %}
-                        class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
-                        {% elif tipo=="DARK" %}
-                        class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
-                        {% elif tipo=="DRAGON" %}
-                        class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-                        {% elif tipo=="ELECTRIC" %}
-                        class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
-                        {% elif tipo=="FAIRY" %}
-                        class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
-                        {% elif tipo=="FIGHTING" %}
-                        class="bg-red-800/20 text-red-500 border border-red-800/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
-                        {% elif tipo=="FIRE" %}
-                        class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
-                        {% elif tipo=="FLYING" %}
-                        class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
-                        {% elif tipo=="GHOST" %}
-                        class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
-                        {% elif tipo=="GRASS" %}
-                        class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
-                        {% elif tipo=="GROUND" %}
-                        class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
-                        {% elif tipo=="ICE" %}
-                        class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                        {% elif tipo=="NORMAL" %}
-                        class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
-                        {% elif tipo=="POISON" %}
-                        class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
-                        {% elif tipo=="PSYCHIC" %}
-                        class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
-                        {% elif tipo=="ROCK" %}
-                        class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
-                        {% elif tipo=="STEEL" %}
-                        class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
-                        {% elif tipo=="WATER" %}
-                        class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
-                        {% else %}
-                        class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
-                        {% endif %}>
-                        {{ tipo }}
-                    </span>
-                    <!-- Si tuviera otro tipo, se añadiría aquí. Ej: Volador -->
-                    {% if pokemon.get("types")[1] %}
-                    {% set tipo = pokemon.get("types")[1].upper() %}
-                    <span {% if tipo=="BUG" %}
-                        class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
-                        {% elif tipo=="DARK" %}
-                        class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
-                        {% elif tipo=="DRAGON" %}
-                        class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-                        {% elif tipo=="ELECTRIC" %}
-                        class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
-                        {% elif tipo=="FAIRY" %}
-                        class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
-                        {% elif tipo=="FIGHTING" %}
-                        class="bg-red-800/20 text-red-500 border border-red-800/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
-                        {% elif tipo=="FIRE" %}
-                        class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
-                        {% elif tipo=="FLYING" %}
-                        class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
-                        {% elif tipo=="GHOST" %}
-                        class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
-                        {% elif tipo=="GRASS" %}
-                        class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
-                        {% elif tipo=="GROUND" %}
-                        class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
-                        {% elif tipo=="ICE" %}
-                        class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                        {% elif tipo=="NORMAL" %}
-                        class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
-                        {% elif tipo=="POISON" %}
-                        class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
-                        {% elif tipo=="PSYCHIC" %}
-                        class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
-                        {% elif tipo=="ROCK" %}
-                        class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
-                        {% elif tipo=="STEEL" %}
-                        class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
-                        {% elif tipo=="WATER" %}
-                        class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
-                        {% else %}
-                        class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
-                        {% endif %}>
-                        {{ tipo }}
-                    </span>
-                    {% endif %}
-
-                </div>
-            </a>
-            <!-- ========================================================================= -->
-            <!-- FIN ELEMENTO REPETIBLE -->
-            <!-- ========================================================================= -->
-            </a>
+            </div>
+        </a>
+        </a>
 
 
 
-            {% endfor %}
-        </div>
+        {% endfor %}
+    </div>
 
-    </main>
-
-    <!-- Footer fijo en la parte inferior al igual que en la página principal -->
-    <footer
-        class="w-full text-center z-10 mt-16 md:absolute md:bottom-6 md:mt-0 text-xs md:text-sm text-gray-300 font-medium tracking-wide">
-        <div
-            class="bg-gray-900/60 backdrop-blur-md border border-gray-700/50 rounded-2xl md:rounded-full px-4 md:px-6 py-3 inline-flex flex-col md:flex-row items-center justify-center gap-2 md:gap-0 shadow-[0_0_15px_rgba(0,0,0,0.5)] pointer-events-auto">
-            <span><span class="text-yellow-400 font-bold">Project:</span> {{nombre_proyecto}}</span>
-            <span class="hidden md:inline mx-3 text-gray-600">|</span>
-            <span><span class="text-blue-400 font-bold">Created by:</span> {{nombre}}</span>
-            <span class="hidden md:inline mx-3 text-gray-600">|</span>
-            <span><span class="text-red-400 font-bold">Year of creation:</span> {{año}}</span>
-        </div>
-    </footer>
-
-</body>
-
-</html>
+</main>
+{% endblock %}

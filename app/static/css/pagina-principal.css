@@ -43,7 +43,7 @@
 
 body {
     /* Dynamic animated gradient background */
-    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #172554) !important; 
+    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #172554) !important;
     background-size: 400% 400%;
     animation: gradientBG 15s ease infinite;
     font-family: 'Ubuntu', sans-serif;
@@ -116,4 +116,17 @@ body {
 
 .text-shadow-custom {
     text-shadow: 3px 3px 0px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Utilidad para el efecto de sombra en textos retro */
+.text-shadow-custom {
+    text-shadow: 2px 2px 0px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Animación para el hover de las tarjetas */
+.card-hover:hover {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
+    /* Glow amarillo */
+    border-color: #facc15;
+    transform: translateY(-5px) scale(1.02);
 }
