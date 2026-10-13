@@ -24,18 +24,15 @@ def paginaInicio():
 
 @app.route("/identificacion", methods=["GET", "POST"])
 def identificarse():
-    nombrePermitido=True
     if request.method == "GET":
-       return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
+       return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año ,nombrePermitido=True)
     elif request.method == "POST":
        trainer = request.form["trainer"]
        if (len(trainer) >= 3 and  len(trainer) <= 15):
            return redirect(url_for('listadoPokemons', trainer=trainer))
        else :
-           return redirect(url_for('identificarse', nombrePermitido=False))
+           return render_template("pagina-ingresar-nombre.html",DATOS=DATOS,nombre_proyecto=nombre_proyecto,nombre=nombre,año=año,nombrePermitido=False)
            
-              
-
 
 @app.route("/pokemons")
 def listadoPokemons():
