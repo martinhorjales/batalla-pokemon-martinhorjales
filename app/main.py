@@ -1,7 +1,7 @@
 from datetime import date
 from pathlib import Path
 
-from flask import Flask, json, jsonify, render_template
+from flask import Flask, json, jsonify, redirect, render_template, request, url_for
 
 app = Flask(__name__)
 
@@ -21,18 +21,20 @@ año = date.today().year
 def paginaInicio():
     return render_template("pagina-principal.html", nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
 
-@app.route("/identificacion")
+
+@app.route("/identificacion", methods=["GET", "POST"])
 def identificarse():
-    return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
-
-
-#@app.route("/identificacion", methods=["GET",POST"])
-#def identificarse():
-#    if request.method == "GET":
-#       return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
-#    else if request.method == "POST":
-#       trainer = request.form["trainer"]
-#       return redirect("/pokemons",trainer=trainer)       
+    nombrePermitido=True
+    if request.method == "GET":
+       return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
+    elif request.method == "POST":
+       trainer = request.form["trainer"]
+       if (len(trainer) >= 3 and  len(trainer) <= 15):
+           return redirect(url_for('listadoPokemons', trainer=trainer))
+       else :
+           return redirect(url_for('identificarse', nombrePermitido=False))
+           
+              
 
 
 @app.route("/pokemons")

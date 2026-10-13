@@ -130,3 +130,8 @@ body {
     border-color: #facc15;
     transform: translateY(-5px) scale(1.02);
 }
+.alerta-roja {
+    color: #dc3545; /* Un rojo estándar de alerta/error */
+    font-weight: bold;
+    margin-top: 10px;
+}
