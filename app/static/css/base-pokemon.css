@@ -1,0 +1,316 @@
+/* Custom animations for the background and elements */
+@keyframes gradientBG {
+    0% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 50%;
+    }
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-15px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes pulseGlow {
+    0% {
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    }
+
+    50% {
+        box-shadow: 0 0 30px rgba(239, 68, 68, 1);
+    }
+
+    100% {
+        box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+    }
+}
+
+body {
+    /* Dynamic animated gradient background */
+    background: linear-gradient(-45deg, #0f172a, #1e1b4b, #312e81, #172554) !important;
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    font-family: 'Ubuntu', sans-serif;
+    overflow-x: hidden;
+    color: white;
+}
+
+.title-font {
+    font-family: 'Bangers', cursive;
+    letter-spacing: 2px;
+}
+
+.pixel-font {
+    font-family: 'Press Start 2P', cursive;
+    line-height: 1.5;
+}
+
+.floating {
+    animation: float 4s ease-in-out infinite;
+}
+
+.floating-delayed {
+    animation: float 4s ease-in-out infinite;
+    animation-delay: 2s;
+}
+
+/* Styling for the central button to look like a Pokéball or arcade button */
+.game-button {
+    background: linear-gradient(to bottom, #ef4444 50%, #ffffff 50%);
+    border: 6px solid #1f2937;
+    position: relative;
+    transition: all 0.2s ease;
+    animation: pulseGlow 2s infinite;
+}
+
+.game-button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border: 4px solid #1f2937;
+    border-radius: 50%;
+    z-index: 10;
+}
+
+.game-button::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background-color: #1f2937;
+    transform: translateY(-50%);
+    z-index: 5;
+}
+
+.game-button:hover {
+    transform: scale(1.05) translateY(-2px);
+    filter: brightness(1.1);
+}
+
+.game-button:active {
+    transform: scale(0.95);
+}
+
+.text-shadow-custom {
+    text-shadow: 3px 3px 0px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Utilidad para el efecto de sombra en textos retro */
+.text-shadow-custom {
+    text-shadow: 2px 2px 0px #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+}
+
+/* Animación para el hover de las tarjetas */
+.card-hover:hover {
+    box-shadow: 0 0 20px rgba(250, 204, 21, 0.6);
+    /* Glow amarillo */
+    border-color: #facc15;
+    transform: translateY(-5px) scale(1.02);
+}
+
+.alerta-roja {
+    color: #dc3545;
+    /* Un rojo estándar de alerta/error */
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* --- ESTILOS GENERALES Y LAYOUT --- */
+.main-layout {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    padding: 1rem;
+    /* p-4 */
+    margin: 0;
+    box-sizing: border-box;
+}
+
+/* --- EFECTOS DE FONDO --- */
+.background-effects {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: -10;
+    opacity: 0.2;
+    pointer-events: none;
+}
+
+.blob {
+    position: absolute;
+    border-radius: 50%;
+    /* rounded-full */
+    filter: blur(64px);
+    /* blur-3xl */
+    mix-blend-mode: screen;
+}
+
+.blob-blue {
+    top: 2.5rem;
+    /* top-10 */
+    left: 2.5rem;
+    /* left-10 */
+    width: 8rem;
+    /* w-32 */
+    height: 8rem;
+    /* h-32 */
+    background-color: #3b82f6;
+    /* bg-blue-500 */
+}
+
+.blob-red {
+    bottom: 2.5rem;
+    /* bottom-10 */
+    right: 2.5rem;
+    /* right-10 */
+    width: 12rem;
+    /* w-48 */
+    height: 12rem;
+    /* h-48 */
+    background-color: #ef4444;
+    /* bg-red-500 */
+}
+
+.blob-yellow {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 24rem;
+    /* w-96 */
+    height: 24rem;
+    /* h-96 */
+    background-color: #eab308;
+    /* bg-yellow-500 */
+    opacity: 0.1;
+    /* opacity-10 */
+}
+
+/* --- FOOTER --- */
+.footer-container {
+    width: 100%;
+    text-align: center;
+    z-index: 10;
+    margin-top: 4rem;
+    /* mt-16 */
+    font-size: 0.75rem;
+    /* text-xs */
+    color: #d1d5db;
+    /* text-gray-300 */
+    font-weight: 500;
+    /* font-medium */
+    letter-spacing: 0.025em;
+    /* tracking-wide */
+}
+
+.footer-card {
+    background-color: rgba(17, 24, 39, 0.6);
+    /* bg-gray-900/60 */
+    backdrop-filter: blur(12px);
+    /* backdrop-blur-md */
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(55, 65, 81, 0.5);
+    /* border-gray-700/50 */
+    border-radius: 1rem;
+    /* rounded-2xl */
+    padding: 0.75rem 1rem;
+    /* py-3 px-4 */
+    display: inline-flex;
+    flex-direction: column;
+    /* flex-col */
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    /* gap-2 */
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    /* shadow-[...] */
+    pointer-events: auto;
+}
+
+/* --- ETIQUETAS DE TEXTO --- */
+.label {
+    font-weight: 700;
+    /* font-bold */
+}
+
+.label-project {
+    color: #facc15;
+    /* text-yellow-400 */
+}
+
+.label-creator {
+    color: #60a5fa;
+    /* text-blue-400 */
+}
+
+.label-year {
+    color: #f87171;
+    /* text-red-400 */
+}
+
+.separator {
+    display: none;
+    /* hidden */
+    margin: 0 0.75rem;
+    /* mx-3 */
+    color: #4b5563;
+    /* text-gray-600 */
+}
+
+/* --- MEDIA QUERIES (Equivalente a 'md:' en Tailwind, min-width: 768px) --- */
+@media (min-width: 768px) {
+    .footer-container {
+        position: absolute;
+        /* md:absolute */
+        bottom: 1.5rem;
+        /* md:bottom-6 */
+        margin-top: 0;
+        /* md:mt-0 */
+        font-size: 0.875rem;
+        /* md:text-sm */
+    }
+
+    .footer-card {
+        border-radius: 9999px;
+        /* md:rounded-full */
+        padding: 0.75rem 1.5rem;
+        /* md:px-6 */
+        flex-direction: row;
+        /* md:flex-row */
+        gap: 0;
+        /* md:gap-0 */
+    }
+
+    .separator {
+        display: inline;
+        /* md:inline */
+    }
+}

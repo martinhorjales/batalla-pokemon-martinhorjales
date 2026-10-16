@@ -1,155 +1,79 @@
 {% extends "base-pokemon.html"%}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pokemon.css') }}">
+{% endblock %}
+
 {% block content %}
-<main class="w-full max-w-4xl mx-auto z-10 flex-grow mt-8">
+<main class="pokemon-detail-main">
 
-    <div class="mb-16 bg-gray-900/80 backdrop-blur-xl border border-gray-700 rounded-[2rem] p-8 shadow-2xl relative">
+    <div class="pokemon-detail-card">
 
-        <h1
-            class="title-font text-5xl md:text-6xl text-center text-yellow-400 tracking-wider capitalize mb-2 drop-shadow-md">
-            {{ pokemon.get('name') }} <span class="text-gray-500 text-3xl">#{{ "%03d" | format(pokemon.get('id', 0))
-                }}</span>
+        <h1 class="pokemon-detail-title title-font text-shadow-custom">
+            {{ pokemon.get('name') }}
+            <span class="pokemon-detail-id">#{{ "%03d" | format(pokemon.get('id', 0)) }}</span>
         </h1>
 
-        <div class="flex flex-wrap justify-center items-center gap-4 mb-6 mt-6">
+        <div class="pokemon-sprites-container">
 
             {% if pokemon.get('sprites', {}).get('front_default') %}
             <img src="{{ pokemon.get('sprites').get('front_default') }}" alt="Frontal Normal"
-                class="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] hover:-translate-y-2 transition-transform cursor-crosshair"
-                title="Normal - Frontal" />
+                class="pokemon-sprite-large" title="Normal - Frontal" />
             {% endif %}
 
             {% if pokemon.get('sprites', {}).get('back_default') %}
             <img src="{{ pokemon.get('sprites').get('back_default') }}" alt="Trasera Normal"
-                class="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] hover:-translate-y-2 transition-transform cursor-crosshair"
-                title="Normal - Trasera" />
+                class="pokemon-sprite-large" title="Normal - Trasera" />
             {% endif %}
 
             {% if pokemon.get('sprites', {}).get('front_shiny') %}
-            <img src="{{ pokemon.get('sprites').get('front_shiny') }}" alt="Frontal Shiny"
-                class="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] hover:-translate-y-2 transition-transform cursor-crosshair"
+            <img src="{{ pokemon.get('sprites').get('front_shiny') }}" alt="Frontal Shiny" class="pokemon-sprite-large"
                 title="Shiny - Frontal" />
             {% endif %}
 
             {% if pokemon.get('sprites', {}).get('back_shiny') %}
-            <img src="{{ pokemon.get('sprites').get('back_shiny') }}" alt="Trasera Shiny"
-                class="w-32 h-32 md:w-40 md:h-40 object-contain drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] hover:-translate-y-2 transition-transform cursor-crosshair"
+            <img src="{{ pokemon.get('sprites').get('back_shiny') }}" alt="Trasera Shiny" class="pokemon-sprite-large"
                 title="Shiny - Trasera" />
             {% endif %}
 
         </div>
 
-        <div class="flex justify-center gap-12 mb-8 pixel-font text-[10px] text-gray-300 text-center">
-            <div>
-                <span class="text-gray-500 block mb-2">HEIGHT</span>
-                <span class="text-blue-400">{{ pokemon.get('height', 0)/10 }} m</span>
+        <div class="pokemon-physical-info pixel-font">
+            <div class="info-block">
+                <span class="info-label">HEIGHT</span>
+                <span class="info-value-blue">{{ pokemon.get('height', 0)/10 }} m</span>
             </div>
-            <div>
-                <span class="text-gray-500 block mb-2">WEIGHT CATEGORY</span>
+            <div class="info-block">
+                <span class="info-label">WEIGHT CATEGORY</span>
                 {% set peso = pokemon.get('weight', 0) %}
-                {% if peso < 50 %} <span class="text-green-400">Light</span>
-                    {% elif peso < 90 %} <span class="text-yellow-400">Normal</span>
+
+                {% if peso < 50 %} <span class="info-value-green">Light</span>
+                    {% elif peso < 90 %} <span class="info-value-yellow">Normal</span>
                         {% else %}
-                        <span class="text-red-400">Heavy</span>
+                        <span class="info-value-red">Heavy</span>
                         {% endif %}
-                        <span class="text-gray-500 ml-1">({{ peso }} kg)</span>
+
+                        <span class="info-value-kg">({{ peso }} kg)</span>
             </div>
         </div>
 
-        <div class="flex justify-center gap-2 mb-10">
+        <div class="pokemon-detail-types">
             {% set tipo = pokemon.get("types")[0].upper() %}
-            <span {% if tipo=="BUG" %}
-                class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
-                {% elif tipo=="DARK" %}
-                class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
-                {% elif tipo=="DRAGON" %}
-                class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-                {% elif tipo=="ELECTRIC" %}
-                class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
-                {% elif tipo=="FAIRY" %}
-                class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
-                {% elif tipo=="FIGHTING" %}
-                class="bg-red-800/20 text-red-500 border border-red-800/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
-                {% elif tipo=="FIRE" %}
-                class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
-                {% elif tipo=="FLYING" %}
-                class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
-                {% elif tipo=="GHOST" %}
-                class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
-                {% elif tipo=="GRASS" %}
-                class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
-                {% elif tipo=="GROUND" %}
-                class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
-                {% elif tipo=="ICE" %}
-                class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                {% elif tipo=="NORMAL" %}
-                class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
-                {% elif tipo=="POISON" %}
-                class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
-                {% elif tipo=="PSYCHIC" %}
-                class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
-                {% elif tipo=="ROCK" %}
-                class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
-                {% elif tipo=="STEEL" %}
-                class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
-                {% elif tipo=="WATER" %}
-                class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
-                {% else %}
-                class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
-                {% endif %}>
+            <span class="type-badge type-{{ tipo | lower }} pixel-font text-shadow-custom">
                 {{ tipo }}
             </span>
 
             {% if pokemon.get("types")[1] %}
-            {% set tipo = pokemon.get("types")[1].upper() %}
-            <span {% if tipo=="BUG" %}
-                class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
-                {% elif tipo=="DARK" %}
-                class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
-                {% elif tipo=="DRAGON" %}
-                class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-                {% elif tipo=="ELECTRIC" %}
-                class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
-                {% elif tipo=="FAIRY" %}
-                class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
-                {% elif tipo=="FIGHTING" %}
-                class="bg-red-800/20 text-red-500 border border-red-800/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
-                {% elif tipo=="FIRE" %}
-                class="bg-red-500/20 text-red-400 border border-red-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
-                {% elif tipo=="FLYING" %}
-                class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
-                {% elif tipo=="GHOST" %}
-                class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
-                {% elif tipo=="GRASS" %}
-                class="bg-green-500/20 text-green-400 border border-green-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
-                {% elif tipo=="GROUND" %}
-                class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
-                {% elif tipo=="ICE" %}
-                class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                {% elif tipo=="NORMAL" %}
-                class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
-                {% elif tipo=="POISON" %}
-                class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
-                {% elif tipo=="PSYCHIC" %}
-                class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
-                {% elif tipo=="ROCK" %}
-                class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
-                {% elif tipo=="STEEL" %}
-                class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
-                {% elif tipo=="WATER" %}
-                class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
-                {% else %}
-                class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[9px] pixel-font px-3 py-1.5 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
-                {% endif %}>
-                {{ tipo }}
+            {% set tipo2 = pokemon.get("types")[1].upper() %}
+            <span class="type-badge type-{{ tipo2 | lower }} pixel-font text-shadow-custom">
+                {{ tipo2 }}
             </span>
             {% endif %}
-
         </div>
 
-        <div class="mb-10 w-full max-w-lg mx-auto bg-black/40 p-6 rounded-xl border border-gray-800">
-            <h3 class="pixel-font text-xs text-center text-gray-400 mb-6">BASE STATS</h3>
-            <div class="space-y-4">
+        <div class="stats-container">
+            <h3 class="section-subtitle pixel-font">BASE STATS</h3>
+            <div class="stats-list">
                 {% set stats = {
                 'HP': pokemon.get("stats")[0].get("value"),
                 'ATTACK': pokemon.get("stats")[1].get("value"),
@@ -160,91 +84,48 @@
                 } %}
 
                 {% for nombre_stat, valor_stat in stats.items() %}
-                <div class="flex items-center pixel-font text-[9px]">
-                    <span class="w-24 text-gray-400">{{ nombre_stat }}</span>
-                    <!-- Grapiko a Baras -->
-                    <div class="flex-grow h-3 bg-gray-900 rounded-full mx-3 border border-gray-700 overflow-hidden">
-                        <div class="h-full bg-gradient-to-r from-yellow-500 to-red-500"
+                <div class="stat-row pixel-font">
+                    <span class="stat-name">{{ nombre_stat }}</span>
+                    <div class="stat-bar-bg">
+                        <div class="stat-bar-fill"
                             style="width: {{ (valor_stat|int / 2.55) if (valor_stat|int / 2.55) < 100 else 100 }}%;">
                         </div>
                     </div>
-                    <span class="w-8 text-right text-white">{{ valor_stat }}</span>
+                    <span class="stat-value">{{ valor_stat }}</span>
                 </div>
                 {% endfor %}
             </div>
         </div>
 
-        <div class="mb-8 w-full max-w-xl mx-auto">
-            <h3 class="pixel-font text-xs text-center text-gray-400 mb-4">ATAQUES DISPONIBLES:</h3>
-            <div
-                class="grid grid-cols-2 sm:grid-cols-3 gap-3 max-h-60 overflow-y-auto p-4 bg-black/20 rounded-xl border border-gray-800 custom-scrollbar">
+        <div class="moves-container">
+            <h3 class="section-subtitle pixel-font">ATAQUES DISPONIBLES:</h3>
+            <div class="moves-grid custom-scrollbar">
                 {% for ataque in pokemon.get('moves', []) %}
-                <div
-                    class="bg-gray-800/80 border border-gray-700 rounded-lg p-3 hover:bg-gray-700 hover:border-gray-500 transition-colors cursor-default flex flex-col justify-between">
+                <div class="move-card">
 
-                    <div class="flex justify-between items-start mb-3 gap-2">
-                        <span class="text-white pixel-font text-[9px] capitalize leading-tight">{{
-                            ataque.get('name', 'N/A') }}</span>
+                    <div class="move-header">
+                        <span class="move-name pixel-font">{{ ataque.get('name', 'N/A') }}</span>
 
                         {% set tipo_ataque = ataque.get('type', 'NORMAL').upper() %}
-                        <span {% if tipo_ataque=="BUG" %}
-                            class="bg-lime-500/20 text-lime-400 border border-lime-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(132,204,22,0.3)]"
-                            {% elif tipo_ataque=="DARK" %}
-                            class="bg-zinc-700/20 text-zinc-400 border border-zinc-700/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(63,63,70,0.3)]"
-                            {% elif tipo_ataque=="DRAGON" %}
-                            class="bg-indigo-500/20 text-indigo-400 border border-indigo-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(99,102,241,0.3)]"
-                            {% elif tipo_ataque=="ELECTRIC" %}
-                            class="bg-yellow-500/20 text-yellow-400 border border-yellow-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(234,179,8,0.3)]"
-                            {% elif tipo_ataque=="FAIRY" %}
-                            class="bg-pink-400/20 text-pink-300 border border-pink-400/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(244,114,182,0.3)]"
-                            {% elif tipo_ataque=="FIGHTING" %}
-                            class="bg-red-800/20 text-red-500 border border-red-800/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(153,27,27,0.3)]"
-                            {% elif tipo_ataque=="FIRE" %}
-                            class="bg-red-500/20 text-red-400 border border-red-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(239,68,68,0.3)]"
-                            {% elif tipo_ataque=="FLYING" %}
-                            class="bg-sky-400/20 text-sky-300 border border-sky-400/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(56,189,248,0.3)]"
-                            {% elif tipo_ataque=="GHOST" %}
-                            class="bg-violet-600/20 text-violet-400 border border-violet-600/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(124,58,237,0.3)]"
-                            {% elif tipo_ataque=="GRASS" %}
-                            class="bg-green-500/20 text-green-400 border border-green-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,197,94,0.3)]"
-                            {% elif tipo_ataque=="GROUND" %}
-                            class="bg-amber-600/20 text-amber-500 border border-amber-600/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,119,6,0.3)]"
-                            {% elif tipo_ataque=="ICE" %}
-                            class="bg-cyan-400/20 text-cyan-300 border border-cyan-400/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(34,211,238,0.3)]"
-                            {% elif tipo_ataque=="NORMAL" %}
-                            class="bg-gray-400/20 text-gray-300 border border-gray-400/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(156,163,175,0.3)]"
-                            {% elif tipo_ataque=="POISON" %}
-                            class="bg-purple-500/20 text-purple-400 border border-purple-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(168,85,247,0.3)]"
-                            {% elif tipo_ataque=="PSYCHIC" %}
-                            class="bg-fuchsia-500/20 text-fuchsia-400 border border-fuchsia-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(217,70,239,0.3)]"
-                            {% elif tipo_ataque=="ROCK" %}
-                            class="bg-stone-500/20 text-stone-400 border border-stone-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(120,113,108,0.3)]"
-                            {% elif tipo_ataque=="STEEL" %}
-                            class="bg-slate-400/20 text-slate-300 border border-slate-400/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(148,163,184,0.3)]"
-                            {% elif tipo_ataque=="WATER" %}
-                            class="bg-blue-500/20 text-blue-400 border border-blue-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(59,130,246,0.3)]"
-                            {% else %}
-                            class="bg-gray-500/20 text-gray-400 border border-gray-500/50 text-[7px] pixel-font px-2 py-1 rounded-full text-shadow-custom shadow-[0_0_8px_rgba(107,114,128,0.3)]"
-                            {% endif %}>
+                        <span
+                            class="type-badge type-{{ tipo_ataque | lower }} badge-small pixel-font text-shadow-custom">
                             {{ tipo_ataque }}
                         </span>
                     </div>
 
-                    <div class="flex justify-between text-[8px] text-gray-400 pixel-font mt-auto">
-                        <span>PWR: <span class="text-red-400">{{ ataque.get('power') or '-' }}</span></span>
-                        <span>ACC: <span class="text-green-400">{{ ataque.get('accuracy') or '-' }}</span></span>
+                    <div class="move-stats pixel-font">
+                        <span>PWR: <span class="stat-red">{{ ataque.get('power') or '-' }}</span></span>
+                        <span>ACC: <span class="stat-green">{{ ataque.get('accuracy') or '-' }}</span></span>
                     </div>
                 </div>
                 {% else %}
-                <span class="text-gray-500 text-[10px] pixel-font col-span-full text-center">No hay ataques
-                    registrados.</span>
+                <span class="empty-moves pixel-font">No hay ataques registrados.</span>
                 {% endfor %}
             </div>
         </div>
 
-        <div class="flex justify-center mt-10">
-            <a href="{{ url_for('listadoPokemons') }}"
-                class="pixel-font text-[10px] text-gray-400 hover:text-white border border-gray-700 bg-gray-900/80 hover:bg-gray-800 px-6 py-4 rounded-full transition-all shadow-lg hover:shadow-yellow-500/20">
+        <div class="return-action">
+            <a href="{{ url_for('listadoPokemons') }}" class="btn-return pixel-font">
                 &lt; RETURN TO LIST
             </a>
         </div>

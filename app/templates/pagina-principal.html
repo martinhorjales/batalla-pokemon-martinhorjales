@@ -1,54 +1,51 @@
 {% extends "base-pokemon.html"%}
 
+{% block styles %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pagina-principal.css') }}">
+{% endblock %}
+
 {% block content %}
-<header class="text-center space-y-4">
-    <span class="text-yellow-400 font-bold uppercase tracking-widest text-sm md:text-base mb-2 block">
+<header class="battle-header">
+    <span class="battle-eyebrow">
         ♦ POKÉMON BATTLE ♦
     </span>
-    <h1
-        class="title-font text-6xl md:text-8xl text-transparent bg-clip-text bg-gradient-to-br from-yellow-300 via-yellow-400 to-yellow-600 filter drop-shadow-[0_5px_5px_rgba(0,0,0,0.8)] pb-2">
+    <h1 class="battle-title title-font">
         Enter the Pokémon Arena!
     </h1>
-    <p class="text-gray-300 text-lg md:text-2xl max-w-2xl mx-auto mt-4 drop-shadow-md">
+    <p class="battle-subtitle">
         Prepare your team, plan your strategy, and face the strongest trainers in the world.
     </p>
 </header>
 
-<div class="w-full flex flex-col md:flex-row items-center justify-center gap-8 md:gap-24 my-8">
+<div class="battle-arena">
 
-    <div class="relative floating flex flex-col items-center">
-        <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/40 rounded-[100%] filter blur-sm"></div>
+    <div class="pokemon-card floating">
+        <div class="pokemon-shadow"></div>
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/4.gif"
-            alt="Charmander Animado"
-            class="w-24 md:w-32 h-auto object-contain drop-shadow-2xl z-10 transform scale-x-[-1]" />
-        <div
-            class="mt-4 bg-gray-900/80 border border-gray-700 px-4 py-1 rounded-full text-sm font-bold text-red-400 pixel-font text-[10px] md:text-xs">
+            alt="Charmander Animado" class="pokemon-sprite pokemon-sprite-flipped" />
+        <div class="pokemon-level level-red pixel-font">
             Lv. 20
         </div>
     </div>
 
-    <div
-        class="z-20 text-4xl md:text-6xl title-font text-red-500 text-shadow-custom transform -rotate-12 animate-pulse">
+    <div class="vs-text title-font text-shadow-custom">
         VS
     </div>
 
-    <div class="relative floating-delayed flex flex-col items-center">
-        <div class="absolute bottom-0 w-32 md:w-48 h-8 bg-black/40 rounded-[100%] filter blur-sm"></div>
+    <div class="pokemon-card floating-delayed">
+        <div class="pokemon-shadow"></div>
         <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/7.gif"
-            alt="Squirtle Animado" class="w-24 md:w-32 h-auto object-contain drop-shadow-2xl z-10" />
-        <div
-            class="mt-4 bg-gray-900/80 border border-gray-700 px-4 py-1 rounded-full text-sm font-bold text-blue-400 pixel-font text-[10px] md:text-xs">
+            alt="Squirtle Animado" class="pokemon-sprite" />
+        <div class="pokemon-level level-blue pixel-font">
             Lv. 20
         </div>
     </div>
 
 </div>
 
-<div class="mt-12 flex flex-col items-center justify-center w-full">
-    <a href="{{ url_for('identificarse') }}"
-        class="game-button rounded-full w-64 md:w-80 h-20 md:h-24 flex items-center justify-center group cursor-pointer">
-        <span
-            class="relative z-20 text-white font-bold text-xl md:text-2xl uppercase tracking-wider text-shadow-custom pt-1 group-hover:text-yellow-300 transition-colors">
+<div class="button-container">
+    <a href="{{ url_for('identificarse') }}" class="game-button start-button">
+        <span class="start-button-text text-shadow-custom">
             Start
         </span>
     </a>

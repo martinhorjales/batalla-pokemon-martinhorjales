@@ -1,0 +1,459 @@
+    .pixel-font {
+        font-family: 'Press Start 2P', monospace;
+    }
+
+    .hp-bar-fill {
+        transition: width 0.5s ease-in-out;
+    }
+
+    /* --- CABECERA DE BATALLA --- */
+    .battle-scene-header {
+        width: 100%;
+        max-width: 64rem;
+        /* max-w-5xl */
+        margin: 1rem auto 0;
+        /* mt-4 mx-auto */
+        text-align: center;
+    }
+
+    .battle-scene-title {
+        color: #facc15;
+        /* text-yellow-400 */
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 1.125rem;
+        /* text-lg */
+        filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07));
+        /* drop-shadow-md */
+        font-family: 'Bangers', cursive;
+        letter-spacing: 2px;
+    }
+
+    .trainer-name-highlight {
+        color: #ffffff;
+        font-size: 1.5rem;
+        /* text-2xl */
+    }
+
+    /* --- ESCENARIO DE BATALLA --- */
+    .battle-stage {
+        width: 100%;
+        max-width: 72rem;
+        /* max-w-6xl */
+        margin: 1rem auto 0;
+        /* mx-auto mt-4 */
+        position: relative;
+        z-index: 10;
+        border: 2px solid rgba(55, 65, 81, 0.8);
+        /* border-gray-700/80 */
+        border-radius: 1.5rem;
+        /* rounded-3xl */
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8);
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+        height: 450px;
+        /* h-[450px] */
+    }
+
+    /* --- HUD (BARRAS DE VIDA) --- */
+    .hud-container {
+        position: absolute;
+        z-index: 30;
+    }
+
+    .hud-rival {
+        top: 1.5rem;
+        /* top-6 */
+        left: 1.5rem;
+        /* left-6 */
+    }
+
+    .hud-player {
+        bottom: 1.5rem;
+        /* bottom-6 */
+        right: 1.5rem;
+        /* right-6 */
+    }
+
+    .hud-box {
+        background-color: rgba(243, 244, 246, 0.9);
+        /* bg-gray-100/90 */
+        border: 4px solid #1f2937;
+        /* border-gray-800 */
+        border-radius: 0.75rem;
+        /* rounded-xl */
+        padding: 0.75rem;
+        /* p-3 */
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        /* shadow-lg */
+        width: 16rem;
+        /* w-64 */
+        transform: skewX(-6deg);
+        /* transform -skew-x-6 */
+    }
+
+    /* Invierte el skew para el contenido para que el texto no se vea inclinado */
+    .skew-reverse {
+        transform: skewX(6deg);
+    }
+
+    .hud-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 0.5rem;
+        /* mb-2 */
+    }
+
+    .hud-name {
+        color: #111827;
+        /* text-gray-900 */
+        font-weight: 700;
+        text-transform: uppercase;
+        font-size: 10px;
+        /* text-[10px] */
+    }
+
+    .hud-level {
+        color: #111827;
+        font-weight: 700;
+        font-size: 10px;
+    }
+
+    .hp-bar-container {
+        width: 100%;
+        background-color: #1f2937;
+        /* bg-gray-800 */
+        border-radius: 9999px;
+        /* rounded-full */
+        height: 0.75rem;
+        /* h-3 */
+        border: 2px solid #111827;
+        /* border-gray-900 */
+        overflow: hidden;
+        margin-bottom: 0.5rem;
+        /* mb-2 */
+    }
+
+    .hp-bar-fill {
+        background-color: #22c55e;
+        /* bg-green-500 */
+        height: 100%;
+    }
+
+    .hud-hp-text {
+        text-align: right;
+        color: #1f2937;
+        /* text-gray-800 */
+        font-weight: 700;
+        font-size: 9px;
+        /* text-[9px] */
+    }
+
+    /* --- SPRITES DE BATALLA --- */
+    .sprite-wrapper {
+        position: absolute;
+        z-index: 10;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sprite-rival {
+        top: 25%;
+        right: 0%;
+    }
+
+    .sprite-player {
+        bottom: 20%;
+        left: 25%;
+        z-index: 20;
+        /* El jugador suele estar más adelante */
+    }
+
+    .sprite-shadow {
+        position: absolute;
+        bottom: 0;
+        border-radius: 100%;
+        filter: blur(4px);
+        /* blur-sm */
+    }
+
+    .shadow-rival {
+        width: 6rem;
+        /* w-24 */
+        height: 1.5rem;
+        /* h-6 */
+        background-color: rgba(0, 0, 0, 0.4);
+    }
+
+    .shadow-player {
+        width: 8rem;
+        /* w-32 */
+        height: 2rem;
+        /* h-8 */
+        background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .sprite-img {
+        height: auto;
+        object-fit: contain;
+        position: relative;
+        z-index: 10;
+        filter: drop-shadow(0 25px 25px rgba(0, 0, 0, 0.15));
+        /* drop-shadow-2xl */
+    }
+
+    .img-rival {
+        width: 6rem;
+    }
+
+    /* w-24 */
+    .img-player {
+        width: 8rem;
+    }
+
+    /* w-32 */
+
+
+    /* --- MENÚ DE ACCIONES (BOTONES) --- */
+    .action-menu-wrapper {
+        width: 100%;
+        max-width: 72rem;
+        /* max-w-6xl */
+        margin: 1.5rem auto 6rem auto;
+        /* mx-auto mt-6 mb-24 */
+        z-index: 10;
+        flex-shrink: 0;
+        position: relative;
+    }
+
+    .action-menu-box {
+        background-color: rgba(17, 24, 39, 0.8);
+        /* bg-gray-900/80 */
+        border: 4px solid #374151;
+        /* border-gray-700 */
+        padding: 1rem;
+        /* p-4 */
+        border-radius: 0.75rem;
+        /* rounded-xl */
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .action-menu-title {
+        color: #ffffff;
+        font-size: 0.75rem;
+        /* text-xs */
+        margin-bottom: 1rem;
+        /* mb-4 */
+        text-align: center;
+    }
+
+    .moves-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        /* grid-cols-2 */
+        gap: 0.75rem;
+        /* gap-3 */
+    }
+
+    .move-btn {
+        border-radius: 0.5rem;
+        /* rounded-lg */
+        padding: 0.75rem;
+        /* p-3 */
+        transition: all 0.15s ease;
+        box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        /* shadow-md */
+        color: #ffffff;
+        cursor: pointer;
+    }
+
+    .move-btn:hover {
+        transform: scale(1.05);
+        /* hover:scale-105 */
+    }
+
+    .move-btn:active {
+        transform: scale(0.95);
+        /* active:scale-95 */
+    }
+
+    .move-btn-text {
+        font-size: 10px;
+        /* text-[10px] */
+        text-transform: uppercase;
+        filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07));
+        transition: color 0.2s ease;
+    }
+
+    .move-btn:hover .move-btn-text {
+        color: #facc15;
+        /* group-hover:text-yellow-300 */
+    }
+
+    /* Colores de los botones */
+    .move-water {
+        background-color: #2563eb;
+        border: 2px solid #60a5fa;
+    }
+
+    /* bg-blue-600 border-blue-400 */
+    .move-water:hover {
+        background-color: #3b82f6;
+    }
+
+    /* hover:bg-blue-500 */
+
+    .move-normal {
+        background-color: #4b5563;
+        border: 2px solid #9ca3af;
+    }
+
+    /* bg-gray-600 border-gray-400 */
+    .move-normal:hover {
+        background-color: #6b7280;
+    }
+
+    /* hover:bg-gray-500 */
+
+    .move-ice {
+        background-color: #0891b2;
+        border: 2px solid #22d3ee;
+    }
+
+    /* bg-cyan-600 border-cyan-400 */
+    .move-ice:hover {
+        background-color: #06b6d4;
+    }
+
+    /* hover:bg-cyan-500 */
+
+    .move-dark {
+        background-color: #7e22ce;
+        border: 2px solid #c084fc;
+    }
+
+    /* bg-purple-700 border-purple-400 */
+    .move-dark:hover {
+        background-color: #9333ea;
+    }
+
+    /* hover:bg-purple-600 */
+
+
+    /* --- MEDIA QUERIES (Equivalente a 'md:' en Tailwind, min-width: 768px) --- */
+    @media (min-width: 768px) {
+        .battle-scene-title {
+            font-size: 1.25rem;
+        }
+
+        /* md:text-xl */
+
+        .battle-stage {
+            height: 600px;
+        }
+
+        /* md:h-[600px] */
+
+        .hud-rival {
+            top: 2.5rem;
+            left: 2.5rem;
+        }
+
+        /* md:top-10 md:left-10 */
+        .hud-player {
+            bottom: 2.5rem;
+            right: 2.5rem;
+        }
+
+        /* md:bottom-10 md:right-10 */
+
+        .hud-box {
+            padding: 1.25rem;
+            width: 20rem;
+        }
+
+        /* md:p-5 md:w-80 */
+        .hud-name {
+            font-size: 0.875rem;
+        }
+
+        /* md:text-sm */
+        .hud-level {
+            font-size: 0.75rem;
+        }
+
+        /* md:text-xs */
+        .hp-bar-container {
+            height: 1rem;
+        }
+
+        /* md:h-4 */
+
+        .sprite-rival {
+            top: 10%;
+            right: 30%;
+        }
+
+        /* md:top-[10%] md:right-[30%] */
+        .shadow-rival {
+            width: 12rem;
+            height: 2.5rem;
+        }
+
+        /* md:w-48 md:h-10 */
+        .img-rival {
+            width: 14rem;
+        }
+
+        /* md:w-56 */
+
+        .sprite-player {
+            bottom: 10%;
+            left: 15%;
+        }
+
+        /* md:bottom-[10%] md:left-[15%] */
+        .shadow-player {
+            width: 16rem;
+            height: 3rem;
+        }
+
+        /* md:w-64 md:h-12 */
+        .img-player {
+            width: 18rem;
+        }
+
+        /* md:w-72 */
+
+        .action-menu-box {
+            padding: 1.5rem;
+        }
+
+        /* md:p-6 */
+        .action-menu-title {
+            font-size: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+
+        /* md:text-sm md:mb-6 */
+        .moves-grid {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 1.5rem;
+        }
+
+        /* md:grid-cols-4 md:gap-6 */
+        .move-btn {
+            padding: 1.25rem;
+        }
+
+        /* md:p-5 */
+        .move-btn-text {
+            font-size: 0.75rem;
+        }
+
+        /* md:text-xs */
+    }
