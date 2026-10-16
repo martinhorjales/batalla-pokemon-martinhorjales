@@ -1,5 +1,6 @@
 from datetime import date
 from pathlib import Path
+import random
 
 from flask import Flask, json, jsonify, redirect, render_template, request, url_for
 
@@ -39,9 +40,10 @@ def identificarse():
 def listadoPokemons():
     trainer = request.args.get('trainer')
 
-    if request.method == "POST":
+    if request.method == "POST" :
         pokemon = request.form["pokemon"]
         trainer = request.form.get('trainer') or trainer
+
         for p in DATOS:
             if (p.get("name") == pokemon.lower() or (pokemon.isdigit() and p.get("id") == int(pokemon))):
                 pokemon = p.get("name")
@@ -52,18 +54,20 @@ def listadoPokemons():
     if request.method == "GET":
         if (trainer == None):
             return render_template("error-pokemons.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
-    return render_template("pokemons.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año, trainer=trainer)
+    
+    return render_template("pokemons.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año, trainer=trainer,pokemonPermitido=True)
 
 
 @app.route("/pokemons/ID/<int:id>")
 def listarPokemon(id):
+    trainer = request.args.get('trainer')
 
     pokemon_seleccionado = next((p for p in DATOS if p.get("id") == id), None)
 
     if (pokemon_seleccionado == None):
         return render_template("error-pokemon.html", nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
 
-    return render_template("pokemon.html", pokemon=pokemon_seleccionado, DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año)
+    return render_template("pokemon.html", pokemon=pokemon_seleccionado, DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año,trainer=trainer)
 
 
 @app.route("/batalla-pokemon", methods=["GET"])
@@ -71,7 +75,24 @@ def combatir():
     trainer = request.args.get('trainer')
     pokemon = request.args.get('pokemon')
 
-    return render_template("batalla-pokemon.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año,pokemon=pokemon,trainer=trainer)
+    pokemonUsuario=None
+
+    for p in DATOS:
+        if(p.get("name")==pokemon):
+            pokemonUsuario=p
+
+    listaPokemons=["pikachu","bulbasaur","charmander","squirtle","eevee","rowlet","tepig","mudkip"]
+    listaPokemons.remove(pokemonUsuario.get("name"))
+
+    pokemonRival = random.choice(listaPokemons)
+
+    ataquesRandom = random.sample(range(0,9), 4)
+
+    for p in DATOS:
+        if(p.get("name")==pokemonRival):
+            pokemonRival=p
+
+    return render_template("batalla-pokemon.html", DATOS=DATOS, nombre_proyecto=nombre_proyecto, nombre=nombre, año=año,pokemonUsuario=pokemonUsuario,trainer=trainer,pokemonRival=pokemonRival,ataquesRandom=ataquesRandom)
 
 
 if __name__ == "__main__":

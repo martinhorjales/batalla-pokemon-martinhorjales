@@ -162,13 +162,13 @@
     }
 
     .sprite-rival {
-        top: 25%;
-        right: 0%;
+        top: 12%;
+        right: 25%;
     }
 
     .sprite-player {
-        bottom: 20%;
-        left: 25%;
+        bottom: 0%;
+        left: 12%;
         z-index: 20;
         /* El jugador suele estar más adelante */
     }
@@ -208,6 +208,7 @@
 
     .img-rival {
         width: 6rem;
+        bottom: 20%;
     }
 
     /* w-24 */
@@ -342,6 +343,225 @@
     }
 
     /* hover:bg-purple-600 */
+    /* =========================================
+   TIPOS DE POKÉMON - BOTONES
+========================================= */
+
+    /* --- NORMAL --- */
+    /* bg-gray-600 border-gray-400 */
+    .move-normal {
+        background-color: #4b5563;
+        border: 2px solid #9ca3af;
+    }
+
+    /* hover:bg-gray-500 */
+    .move-normal:hover {
+        background-color: #6b7280;
+    }
+
+    /* --- FIRE (Fuego) --- */
+    /* bg-orange-600 border-orange-400 */
+    .move-fire {
+        background-color: #ea580c;
+        border: 2px solid #fb923c;
+    }
+
+    /* hover:bg-orange-500 */
+    .move-fire:hover {
+        background-color: #f97316;
+    }
+
+    /* --- WATER (Agua) --- */
+    /* bg-blue-600 border-blue-400 */
+    .move-water {
+        background-color: #2563eb;
+        border: 2px solid #60a5fa;
+    }
+
+    /* hover:bg-blue-500 */
+    .move-water:hover {
+        background-color: #3b82f6;
+    }
+
+    /* --- GRASS (Planta) --- */
+    /* bg-green-600 border-green-400 */
+    .move-grass {
+        background-color: #16a34a;
+        border: 2px solid #4ade80;
+    }
+
+    /* hover:bg-green-500 */
+    .move-grass:hover {
+        background-color: #22c55e;
+    }
+
+    /* --- ELECTRIC (Eléctrico) --- */
+    /* bg-yellow-500 border-yellow-300 */
+    .move-electric {
+        background-color: #eab308;
+        border: 2px solid #fde047;
+    }
+
+    /* hover:bg-yellow-400 */
+    .move-electric:hover {
+        background-color: #facc15;
+    }
+
+    /* --- ICE (Hielo) --- */
+    /* bg-cyan-600 border-cyan-400 */
+    .move-ice {
+        background-color: #0891b2;
+        border: 2px solid #22d3ee;
+    }
+
+    /* hover:bg-cyan-500 */
+    .move-ice:hover {
+        background-color: #06b6d4;
+    }
+
+    /* --- FIGHTING (Lucha) --- */
+    /* bg-red-700 border-red-500 */
+    .move-fighting {
+        background-color: #b91c1c;
+        border: 2px solid #ef4444;
+    }
+
+    /* hover:bg-red-600 */
+    .move-fighting:hover {
+        background-color: #dc2626;
+    }
+
+    /* --- POISON (Veneno) --- */
+    /* bg-fuchsia-600 border-fuchsia-400 */
+    .move-poison {
+        background-color: #c026d3;
+        border: 2px solid #e879f9;
+    }
+
+    /* hover:bg-fuchsia-500 */
+    .move-poison:hover {
+        background-color: #d946ef;
+    }
+
+    /* --- GROUND (Tierra) --- */
+    /* bg-amber-600 border-amber-400 */
+    .move-ground {
+        background-color: #d97706;
+        border: 2px solid #fbbf24;
+    }
+
+    /* hover:bg-amber-500 */
+    .move-ground:hover {
+        background-color: #f59e0b;
+    }
+
+    /* --- FLYING (Volador) --- */
+    /* bg-sky-500 border-sky-300 */
+    .move-flying {
+        background-color: #0ea5e9;
+        border: 2px solid #7dd3fc;
+    }
+
+    /* hover:bg-sky-400 */
+    .move-flying:hover {
+        background-color: #38bdf8;
+    }
+
+    /* --- PSYCHIC (Psíquico) --- */
+    /* bg-pink-600 border-pink-400 */
+    .move-psychic {
+        background-color: #db2777;
+        border: 2px solid #f472b6;
+    }
+
+    /* hover:bg-pink-500 */
+    .move-psychic:hover {
+        background-color: #ec4899;
+    }
+
+    /* --- BUG (Bicho) --- */
+    /* bg-lime-600 border-lime-400 */
+    .move-bug {
+        background-color: #65a30d;
+        border: 2px solid #a3e635;
+    }
+
+    /* hover:bg-lime-500 */
+    .move-bug:hover {
+        background-color: #84cc16;
+    }
+
+    /* --- ROCK (Roca) --- */
+    /* bg-yellow-700 border-yellow-500 */
+    .move-rock {
+        background-color: #a16207;
+        border: 2px solid #eab308;
+    }
+
+    /* hover:bg-yellow-600 */
+    .move-rock:hover {
+        background-color: #ca8a04;
+    }
+
+    /* --- GHOST (Fantasma) --- */
+    /* bg-violet-800 border-violet-500 */
+    .move-ghost {
+        background-color: #5b21b6;
+        border: 2px solid #8b5cf6;
+    }
+
+    /* hover:bg-violet-700 */
+    .move-ghost:hover {
+        background-color: #6d28d9;
+    }
+
+    /* --- DRAGON (Dragón) --- */
+    /* bg-indigo-600 border-indigo-400 */
+    .move-dragon {
+        background-color: #4f46e5;
+        border: 2px solid #818cf8;
+    }
+
+    /* hover:bg-indigo-500 */
+    .move-dragon:hover {
+        background-color: #6366f1;
+    }
+
+    /* --- DARK (Siniestro) --- */
+    /* bg-purple-700 border-purple-400 */
+    .move-dark {
+        background-color: #7e22ce;
+        border: 2px solid #c084fc;
+    }
+
+    /* hover:bg-purple-600 */
+    .move-dark:hover {
+        background-color: #9333ea;
+    }
+
+    /* --- STEEL (Acero) --- */
+    /* bg-slate-500 border-slate-400 */
+    .move-steel {
+        background-color: #64748b;
+        border: 2px solid #94a3b8;
+    }
+
+    /* hover:bg-slate-400 */
+    .move-steel:hover {
+        background-color: #94a3b8;
+    }
+
+    /* --- FAIRY (Hada) --- */
+    /* bg-rose-400 border-rose-200 */
+    .move-fairy {
+        background-color: #fb7185;
+        border: 2px solid #fecdd3;
+    }
+
+    /* hover:bg-rose-300 */
+    .move-fairy:hover {
+        background-color: #fda4af;
+    }
 
 
     /* --- MEDIA QUERIES (Equivalente a 'md:' en Tailwind, min-width: 768px) --- */
@@ -393,38 +613,38 @@
 
         /* md:h-4 */
 
-        .sprite-rival {
-            top: 10%;
-            right: 30%;
-        }
+        .sprite-rival {}
 
         /* md:top-[10%] md:right-[30%] */
         .shadow-rival {
             width: 12rem;
-            height: 2.5rem;
+            height: 3rem;
+            bottom: 25%;
         }
 
         /* md:w-48 md:h-10 */
         .img-rival {
-            width: 14rem;
+            width: 20rem;
+            bottom: 20%;
         }
 
         /* md:w-56 */
 
         .sprite-player {
-            bottom: 10%;
-            left: 15%;
+            bottom: -2%;
+            left: 6%;
         }
 
         /* md:bottom-[10%] md:left-[15%] */
         .shadow-player {
-            width: 16rem;
+            width: 12rem;
             height: 3rem;
+            bottom: 20%;
         }
 
         /* md:w-64 md:h-12 */
         .img-player {
-            width: 18rem;
+            width: 22rem;
         }
 
         /* md:w-72 */
