@@ -42,9 +42,31 @@ def listadoPokemons():
         trainer = request.form.get('trainer') or trainer
 
         if pokemon == "":
-            tipo = request.form.get("pokemon-type-filter", "")
+            tipo = request.form.get("pokemon-type-filter", "").lower()
             min_height = request.form.get("min-height-filter", "")
             max_weight = request.form.get("max-weight-filter", "")
+
+            minh = float(min_height) if min_height else None
+            maxw = float(max_weight) if max_weight else None
+
+            pokemons_filtrados = []
+
+            for p in DATOS:
+
+                if tipo and tipo.lower() not in p.get("types", []):
+                    continue
+
+                altura_m = p.get("height", 0) / 10
+                if minh is not None and altura_m < minh:
+                    continue
+
+                peso_kg = p.get("weight", 0) / 10
+                if maxw is not None and peso_kg > maxw:
+                    continue
+
+                pokemons_filtrados.append(p)
+
+            return render_template("pokemons.html", DATOS=pokemons_filtrados, trainer=trainer, pokemonPermitido=True)
 
         else:
             for p in DATOS:
@@ -56,7 +78,7 @@ def listadoPokemons():
 
     if request.method == "GET":
         if (trainer == None):
-            return render_template("error-pokemons.html", DATOS=DATOS, año=año)
+            return render_template("error-pokemons.html", DATOS=DATOS)
 
     return render_template("pokemons.html", DATOS=DATOS,trainer=trainer, pokemonPermitido=True)
 

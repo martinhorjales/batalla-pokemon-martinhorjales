@@ -73,7 +73,8 @@
             <div class="pokemon-grid">
                 {% for pokemon in DATOS %}
 
-                <a href="{{ url_for('listarPokemon', id=pokemon.get('id') , trainer=trainer) }}" class="pokemon-card card-hover group">
+                <a href="{{ url_for('listarPokemon', id=pokemon.get('id'), trainer=trainer) }}"
+                    class="pokemon-card card-hover group">
 
                     <span class="pokemon-id pixel-font">
                         #{{ pokemon.get("id") }}
