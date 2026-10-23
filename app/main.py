@@ -2,9 +2,17 @@ from datetime import date
 from pathlib import Path
 import random
 
-from flask import Flask, json, jsonify, redirect, render_template, request, url_for
+from flask import Flask, json, jsonify, redirect, render_template, request, url_for, session
+from flask_session import Session
 
 app = Flask(__name__)
+
+app.config["SESSION_TYPE"] = "filesystem"   # Guardar en ficheros
+app.config["SESSION_PERMANENT"] = False     # Sesiones temporales
+app.config["SESSION_FILE_DIR"] = "./.flask_session"  # Carpeta donde se guardan
+app.secret_key = "clave_super_secreta_martin"
+
+Session(app)
 
 # La ruta se calcula desde este fichero, no desde donde se lance el programa
 RUTA_DATOS = Path(__file__).resolve().parent.parent / \
@@ -13,7 +21,6 @@ RUTA_DATOS = Path(__file__).resolve().parent.parent / \
 # Leemos el JSON una sola vez, al iniciar la aplicación
 with RUTA_DATOS.open(encoding="utf-8") as f:
     DATOS = json.load(f)
-
 
 
 @app.route("/")
@@ -28,18 +35,18 @@ def identificarse():
     elif request.method == "POST":
         trainer = request.form["trainer"]
         if (len(trainer) >= 3 and len(trainer) <= 15):
-            return redirect(url_for('listadoPokemons', trainer=trainer))
+            session["trainer"] = trainer
+            return redirect(url_for('listadoPokemons'))
         else:
             return render_template("pagina-ingresar-nombre.html", DATOS=DATOS, nombrePermitido=False)
 
 
 @app.route("/pokemons", methods=["GET", "POST"])
 def listadoPokemons():
-    trainer = request.args.get('trainer')
+    trainer = session.get("trainer")
 
     if request.method == "POST":
         pokemon = request.form.get("pokemon", "")
-        trainer = request.form.get('trainer') or trainer
 
         if pokemon == "":
             tipo = request.form.get("pokemon-type-filter", "").lower()
@@ -66,59 +73,59 @@ def listadoPokemons():
 
                 pokemons_filtrados.append(p)
 
-            return render_template("pokemons.html", DATOS=pokemons_filtrados, trainer=trainer, pokemonPermitido=True)
+            return render_template("pokemons.html", DATOS=pokemons_filtrados, pokemonPermitido=True)
 
         else:
             for p in DATOS:
                 if (p.get("name") == pokemon.lower() or (pokemon.isdigit() and p.get("id") == int(pokemon))):
-                    pokemon = p.get("name")
-                    return redirect(url_for('combatir', pokemon=pokemon, trainer=trainer))
+                    session["pokemon"] = p
+                    return redirect(url_for('combatir'))
 
-            return render_template("pokemons.html", DATOS=DATOS, trainer=trainer, pokemonPermitido=False)
+            return render_template("pokemons.html", DATOS=DATOS, pokemonPermitido=False)
 
     if request.method == "GET":
         if (trainer == None):
             return render_template("error-pokemons.html", DATOS=DATOS)
 
-    return render_template("pokemons.html", DATOS=DATOS,trainer=trainer, pokemonPermitido=True)
+    return render_template("pokemons.html", DATOS=DATOS, pokemonPermitido=True)
 
 
 @app.route("/pokemons/ID/<int:id>")
 def listarPokemon(id):
-    trainer = request.args.get('trainer')
 
     pokemon_seleccionado = next((p for p in DATOS if p.get("id") == id), None)
 
     if (pokemon_seleccionado == None):
         return render_template("error-pokemon.html")
 
-    return render_template("pokemon.html", pokemon=pokemon_seleccionado,trainer=trainer)
+    return render_template("pokemon.html", pokemon=pokemon_seleccionado)
 
 
 @app.route("/batalla-pokemon", methods=["GET"])
 def combatir():
-    trainer = request.args.get('trainer')
-    pokemon = request.args.get('pokemon')
-
-    pokemonUsuario = None
-
-    for p in DATOS:
-        if (p.get("name") == pokemon):
-            pokemonUsuario = p
+    pokemon = session.get("pokemon")
 
     listaPokemons = ["pikachu", "bulbasaur", "charmander",
                      "squirtle", "eevee", "rowlet", "tepig", "mudkip"]
-    listaPokemons.remove(pokemonUsuario.get("name"))
+
+    if (len(pokemon) != 2):
+        listaPokemons.remove(pokemon.get("name"))
 
     pokemonRival = random.choice(listaPokemons)
 
     ataquesRandom = random.sample(range(0, 9), 4)
 
+    if len(session.get('pokemon')) != 2:
+        session["pokemon"] = [pokemon, ataquesRandom]
+
     for p in DATOS:
         if (p.get("name") == pokemonRival):
             pokemonRival = p
 
-    return render_template("batalla-pokemon.html", DATOS=DATOS,pokemonUsuario=pokemonUsuario, trainer=trainer, pokemonRival=pokemonRival, ataquesRandom=ataquesRandom)
+    if not session.get('pokemonRival'):
+        session["pokemonRival"] = pokemonRival
+
+    return render_template("batalla-pokemon.html", DATOS=DATOS)
 
 
 if __name__ == "__main__":

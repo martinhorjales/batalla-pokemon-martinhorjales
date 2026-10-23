@@ -21,7 +21,7 @@
 
     <div class="header-right">
         <p class="trainer-info pixel-font">
-            Trainer: <span class="trainer-name">{{trainer}}</span>
+            Trainer: <span class="trainer-name">{{session.get("trainer")}}</span>
         </p>
     </div>
 
@@ -34,7 +34,7 @@
     <div class="content-layout">
 
         <div class="sidebar-left">
-            <form method="POST" action="{{ url_for('listadoPokemons',trainer=trainer) }}" class="filter-form">
+            <form method="POST" action="{{ url_for('listadoPokemons') }}" class="filter-form">
 
                 <fieldset class="filter-fieldset">
 
@@ -73,7 +73,7 @@
             <div class="pokemon-grid">
                 {% for pokemon in DATOS %}
 
-                <a href="{{ url_for('listarPokemon', id=pokemon.get('id'), trainer=trainer) }}"
+                <a href="{{ url_for('listarPokemon', id=pokemon.get('id')) }}"
                     class="pokemon-card card-hover group">
 
                     <span class="pokemon-id pixel-font">
@@ -111,7 +111,7 @@
 
         <div class="sidebar-right">
 
-            <form method="POST" action="{{ url_for('listadoPokemons',trainer=trainer) }}" class="filter-form">
+            <form method="POST" action="{{ url_for('listadoPokemons') }}" class="filter-form">
                 <label for="pokemon" class="filter-label">Choose your Pokémon for the battle</label>
                 <input id="pokemon" placeholder="Enter the Pokémon name or ID..." name="pokemon" type="text" required
                     class="filter-input text-black">

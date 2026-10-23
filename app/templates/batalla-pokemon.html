@@ -7,7 +7,7 @@
 {% block header %}
 <header class="battle-scene-header">
     <h2 class="battle-scene-title">
-        Trainer <span class="trainer-name-highlight">{{trainer}}</span> vs Dominguero!
+        Trainer <span class="trainer-name-highlight">{{session.get("trainer")}}</span> vs Dominguero!
     </h2>
 </header>
 {% endblock %}
@@ -19,7 +19,7 @@
     <div class="hud-container hud-rival">
         <div class="hud-box">
             <div class="hud-header skew-reverse">
-                <span class="hud-name pixel-font">{{pokemonRival.get("name")}}</span>
+                <span class="hud-name pixel-font">{{session.get("pokemonRival").get("name")}}</span>
                 <span class="hud-level pixel-font">Lv20</span>
             </div>
             <div class="hp-bar-container skew-reverse">
@@ -30,27 +30,27 @@
 
     <div class="sprite-wrapper sprite-rival">
         <div class="sprite-shadow shadow-rival"></div>
-        <img src="{{pokemonRival.get('sprites').get('front_default')}}"
+        <img src="{{session.get('pokemonRival').get('sprites').get('front_default')}}"
             alt="Rival Pokemon" class="sprite-img img-rival" />
     </div>
 
     <div class="sprite-wrapper sprite-player">
         <div class="sprite-shadow shadow-player"></div>
-        <img src="{{ pokemonUsuario.get('sprites').get('back_default') }}"
-            alt="{{pokemonUsuario.get('name')}}" class="sprite-img img-player" />
+        <img src="{{ session.get('pokemon')[0].get('sprites').get('back_default') }}"
+            alt="{{session.get('pokemon')[0].get('name')}}" class="sprite-img img-player" />
     </div>
 
     <div class="hud-container hud-player">
         <div class="hud-box">
             <div class="hud-header skew-reverse">
-                <span class="hud-name pixel-font">{{pokemonUsuario.get("name")}}</span>
+                <span class="hud-name pixel-font">{{session.get('pokemon')[0].get("name")}}</span>
                 <span class="hud-level pixel-font">Lv20</span>
             </div>
             <div class="hp-bar-container skew-reverse">
                 <div class="hp-bar-fill" style="width: 100%;"></div>
             </div>
             <div class="hud-hp-text pixel-font skew-reverse">
-                {{pokemonUsuario.get("stats")[0].get("value")}}/{{pokemonUsuario.get("stats")[0].get("value")}} HP
+                {{session.get('pokemon')[0].get("stats")[0].get("value")}}/{{session.get('pokemon')[0].get("stats")[0].get("value")}} HP
             </div>
         </div>
     </div>
@@ -62,20 +62,20 @@
 
         <div class="moves-grid">
 
-            <button class="move-btn move-{{pokemonUsuario.get('moves')[ataquesRandom[0]].get('type')}}">
-                <span class="move-btn-text pixel-font">{{pokemonUsuario.get("moves")[ataquesRandom[0]].get("name")}}</span>
+            <button class="move-btn move-{{ session.pokemon[0].moves[session.pokemon[1][0]].type}}">
+                <span class="move-btn-text pixel-font">{{session.get('pokemon')[0].get("moves")[session.get('pokemon')[1][0]].get("name")}}</span>
             </button>
 
-            <button class="move-btn move-{{pokemonUsuario.get('moves')[ataquesRandom[1]].get('type')}}">
-                <span class="move-btn-text pixel-font">{{pokemonUsuario.get("moves")[ataquesRandom[1]].get("name")}}</span>
+            <button class="move-btn move-{{ session.pokemon[0].moves[session.pokemon[1][1]].type}}">
+                <span class="move-btn-text pixel-font">{{session.get('pokemon')[0].get("moves")[session.get('pokemon')[1][1]].get("name")}}</span>
             </button>
 
-            <button class="move-btn move-{{pokemonUsuario.get('moves')[ataquesRandom[2]].get('type')}}">
-                <span class="move-btn-text pixel-font">{{pokemonUsuario.get("moves")[ataquesRandom[2]].get("name")}}</span>
+            <button class="move-btn move-{{ session.pokemon[0].moves[session.pokemon[1][2]].type}}">
+                <span class="move-btn-text pixel-font">{{session.get('pokemon')[0].get("moves")[session.get('pokemon')[1][2]].get("name")}}</span>
             </button>
 
-            <button class="move-btn move-{{pokemonUsuario.get('moves')[ataquesRandom[3]].get('type')}}">
-                <span class="move-btn-text pixel-font">{{pokemonUsuario.get("moves")[ataquesRandom[3]].get("name")}}</span>
+            <button class="move-btn move-{{ session.pokemon[0].moves[session.pokemon[1][3]].type}}">
+                <span class="move-btn-text pixel-font">{{session.get('pokemon')[0].get("moves")[session.get('pokemon')[1][3]].get("name")}}</span>
             </button>
 
         </div>
