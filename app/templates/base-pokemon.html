@@ -7,7 +7,7 @@
     <title>Página Principal - Batallas Pokémon</title>
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/base-pokemon.css') }}">
-    
+
     {% block styles %}
     {% endblock %}
 
@@ -32,16 +32,20 @@
     {% block header %}{% endblock %}
 
     <main>
+        <a href="{{ url_for('logOut') }}" class="btn-logout"
+            style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Log out</a>
+            
         {% block content %}{% endblock %}
     </main>
 
     <footer class="footer-container">
         <div class="footer-card">
             <span><span class="label label-project">Project:</span><span> batalla-pokemon-martinhorjales</span>
-            <span class="separator">|</span>
-            <span><span class="label label-creator">Created by:</span><span></span> Martín Horjales Monteagudo</span>
-            <span class="separator">|</span>
-            <span><span class="label label-year">Year of creation:</span><span> 2026</span>
+                <span class="separator">|</span>
+                <span><span class="label label-creator">Created by:</span><span></span> Martín Horjales
+                    Monteagudo</span>
+                <span class="separator">|</span>
+                <span><span class="label label-year">Year of creation:</span><span> 2026</span>
         </div>
     </footer>
 

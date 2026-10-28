@@ -285,6 +285,31 @@ body {
     /* text-gray-600 */
 }
 
+.btn-logout {
+    /* Posicionamiento fijo arriba a la izquierda */
+    position: fixed; 
+    top: 20px;       /* Distancia desde el borde superior */
+    left: 20px;      /* Distancia desde el borde izquierdo */
+    z-index: 9999;   /* Asegura que se vea por encima de todo el contenido */
+
+    /* Estilo del botón rojo */
+    border: 2px solid white;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3); /* Pequeña sombra para que destaque */
+    transition: background-color 0.3s;
+  }
+
+  /* Efecto al pasar el ratón por encima */
+  .btn-logout:hover {
+    background-color: #c7c6c6; 
+  }
+
 /* --- MEDIA QUERIES (Equivalente a 'md:' en Tailwind, min-width: 768px) --- */
 @media (min-width: 768px) {
     .footer-container {
