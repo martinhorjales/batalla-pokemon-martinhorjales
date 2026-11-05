@@ -2,7 +2,7 @@ from datetime import date
 from pathlib import Path
 import random
 
-from flask import Flask, json, jsonify, redirect, render_template, request, url_for ,session
+from flask import Flask, json, jsonify, redirect, render_template, request, url_for, session
 from flask_session import Session
 
 app = Flask(__name__)
@@ -28,11 +28,12 @@ def paginaInicio():
 
     return render_template("pagina-principal.html")
 
+
 @app.route('/logout')
 def logOut():
 
     session.clear()
-    
+
     return render_template("pagina-principal.html")
 
 
@@ -113,9 +114,8 @@ def listarPokemon(id):
 def combatir():
     pokemon = session.get("pokemon")
 
-    if(not pokemon):
-        return render_template ("error-sesion.html")
-    
+    if (not pokemon):
+        return render_template("error-sesion.html")
 
     listaPokemons = ["pikachu", "bulbasaur", "charmander",
                      "squirtle", "eevee", "rowlet", "tepig", "mudkip"]
