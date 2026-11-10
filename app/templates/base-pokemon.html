@@ -32,7 +32,7 @@
     {% block header %}{% endblock %}
 
     <main>
-        <a href="{{ url_for('logOut') }}" class="btn-logout"
+        <a href="{{ url_for('usuario.logOut') }}" class="btn-logout"
             style="text-decoration: none; display: flex; align-items: center; justify-content: center;">Log out</a>
             
         {% block content %}{% endblock %}

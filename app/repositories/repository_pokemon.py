@@ -13,7 +13,7 @@ class PokemonRepository:
         return ruta
 
     def carga_datos(self):
-        with self.ruta_datos(self).open(encoding="utf-8") as f:
+        with self.ruta_datos().open(encoding="utf-8") as f:
             datos = json.load(f)
         return datos
 
@@ -21,6 +21,12 @@ class PokemonRepository:
         pokemons = []
         for pokemon in self.carga_datos():
             pokemons.append(Pokemon(**pokemon))
+        return pokemons
+
+    def obtener_nombre_pokemons(self):
+        pokemons = []
+        for pokemon in self.carga_datos():
+            pokemons.append(pokemon.name)
         return pokemons
 
     def obtener_pokemon_por_id(self, id):
