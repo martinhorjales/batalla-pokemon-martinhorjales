@@ -10,29 +10,29 @@
     <div class="pokemon-detail-card">
 
         <h1 class="pokemon-detail-title title-font text-shadow-custom">
-            {{ pokemon.get('name') }}
-            <span class="pokemon-detail-id">#{{ "%03d" | format(pokemon.get('id', 0)) }}</span>
+            {{ pokemon.name}}
+            <span class="pokemon-detail-id">#{{ "%03d" | format(pokemon.id) }}</span>
         </h1>
 
         <div class="pokemon-sprites-container">
 
-            {% if pokemon.get('sprites', {}).get('front_default') %}
-            <img src="{{ pokemon.get('sprites').get('front_default') }}" alt="Frontal Normal"
+            {% if pokemon.sprites.get('front_default') %}
+            <img src="{{ pokemon.sprites.get('front_default') }}" alt="Frontal Normal"
                 class="pokemon-sprite-large" title="Normal - Frontal" />
             {% endif %}
 
-            {% if pokemon.get('sprites', {}).get('back_default') %}
-            <img src="{{ pokemon.get('sprites').get('back_default') }}" alt="Trasera Normal"
+            {% if pokemon.sprites.get('back_default') %}
+            <img src="{{pokemon.sprites.get('back_default') }}" alt="Trasera Normal"
                 class="pokemon-sprite-large" title="Normal - Trasera" />
             {% endif %}
 
-            {% if pokemon.get('sprites', {}).get('front_shiny') %}
-            <img src="{{ pokemon.get('sprites').get('front_shiny') }}" alt="Frontal Shiny" class="pokemon-sprite-large"
+            {% if pokemon.sprites.get('front_shiny') %}
+            <img src="{{pokemon.sprites.get('front_shiny') }}" alt="Frontal Shiny" class="pokemon-sprite-large"
                 title="Shiny - Frontal" />
             {% endif %}
 
-            {% if pokemon.get('sprites', {}).get('back_shiny') %}
-            <img src="{{ pokemon.get('sprites').get('back_shiny') }}" alt="Trasera Shiny" class="pokemon-sprite-large"
+            {% if pokemon.sprites.get('back_shiny') %}
+            <img src="{{pokemon.sprites.get('back_shiny') }}" alt="Trasera Shiny" class="pokemon-sprite-large"
                 title="Shiny - Trasera" />
             {% endif %}
 
@@ -41,11 +41,11 @@
         <div class="pokemon-physical-info pixel-font">
             <div class="info-block">
                 <span class="info-label">HEIGHT</span>
-                <span class="info-value-blue">{{ pokemon.get('height', 0)/10 }} m</span>
+                <span class="info-value-blue">{{ pokemon.height/10 }} m</span>
             </div>
             <div class="info-block">
                 <span class="info-label">WEIGHT CATEGORY</span>
-                {% set peso = pokemon.get('weight', 0) %}
+                {% set peso = pokemon.weight %}
 
                 {% if peso < 50 %} <span class="info-value-green">Light</span>
                     {% elif peso < 90 %} <span class="info-value-yellow">Normal</span>
@@ -58,13 +58,13 @@
         </div>
 
         <div class="pokemon-detail-types">
-            {% set tipo = pokemon.get("types")[0].upper() %}
+            {% set tipo = pokemon.types[0].upper() %}
             <span class="type-badge type-{{ tipo | lower }} pixel-font text-shadow-custom">
                 {{ tipo }}
             </span>
 
-            {% if pokemon.get("types")[1] %}
-            {% set tipo2 = pokemon.get("types")[1].upper() %}
+            {% if pokemon.types[1] %}
+            {% set tipo2 = pokemon.types[1].upper() %}
             <span class="type-badge type-{{ tipo2 | lower }} pixel-font text-shadow-custom">
                 {{ tipo2 }}
             </span>
@@ -75,12 +75,12 @@
             <h3 class="section-subtitle pixel-font">BASE STATS</h3>
             <div class="stats-list">
                 {% set stats = {
-                'HP': pokemon.get("stats")[0].get("value"),
-                'ATTACK': pokemon.get("stats")[1].get("value"),
-                'DEFENSE': pokemon.get("stats")[2].get("value"),
-                'SPECIAL-ATTACK': pokemon.get("stats")[3].get("value"),
-                'SPECIAL-DEFENSE': pokemon.get("stats")[4].get("value"),
-                'SPEED': pokemon.get("stats")[5].get("value")
+                'HP': pokemon.stats[0].get("value"),
+                'ATTACK': pokemon.stats[1].get("value"),
+                'DEFENSE': pokemon.stats[2].get("value"),
+                'SPECIAL-ATTACK': pokemon.stats[3].get("value"),
+                'SPECIAL-DEFENSE': pokemon.stats[4].get("value"),
+                'SPEED': pokemon.stats[5].get("value")
                 } %}
 
                 {% for nombre_stat, valor_stat in stats.items() %}
@@ -100,7 +100,7 @@
         <div class="moves-container">
             <h3 class="section-subtitle pixel-font">ATAQUES DISPONIBLES:</h3>
             <div class="moves-grid custom-scrollbar">
-                {% for ataque in pokemon.get('moves', []) %}
+                {% for ataque in pokemon.moves %}
                 <div class="move-card">
 
                     <div class="move-header">

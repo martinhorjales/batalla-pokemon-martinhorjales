@@ -22,21 +22,28 @@
 
     <div class="pokemon-display floating">
         <div class="pokemon-shadow-dark"></div>
-        <img src="{{ DATOS[0].get('sprites').get('front_shiny') }}" alt="Imagen de {{ DATOS[0].get('name') }}"
+        <img src="{{ DATOS[0].sprites.get('front_shiny') }}" alt="Imagen de {{ DATOS[0].name }}"
             class="pokemon-hero-sprite" />
     </div>
 
     <div class="form-container group">
-        {%if not nombrePermitido %}
-        <div class="alerta-roja">Nombre no permitido</div>
-        {% endif %}
 
         <form method="POST" action="/identificacion" class="identification-form">
-            <input id="trainer" name="trainer" type="text" required class="trainer-input">
 
-            <button type="submit" class="submit-button">
-                Continue
-            </button>
+            {{ form.hidden_tag() }}
+
+            {{ form.trainer(class="trainer-input") }}
+
+            {% if form and form.trainer.errors %}
+                {% for error in form.trainer.errors %}
+                    <p style="color: #ff4444; font-weight: bold; margin-bottom: 10px; font-size: 0.9em;">
+                        {{ error }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+
+            {{ form.submit(class="submit-button", value="Continue") }}
+            
         </form>
     </div>
 

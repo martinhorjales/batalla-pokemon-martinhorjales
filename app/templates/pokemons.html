@@ -34,7 +34,7 @@
     <div class="content-layout">
 
         <div class="sidebar-left">
-            <form method="POST" action="{{ url_for('usuario.listadoPokemons') }}" class="filter-form">
+            <form method="GET" action="{{ url_for('pokemon.listadoPokemons') }}" class="filter-form">
 
                 <fieldset class="filter-fieldset">
 
@@ -73,31 +73,31 @@
             <div class="pokemon-grid">
                 {% for pokemon in DATOS %}
 
-                <a href="{{ url_for('pokemon.listarPokemon', id=pokemon.get('id')) }}"
+                <a href="{{ url_for('pokemon.listarPokemon', id=pokemon.id) }}"
                     class="pokemon-card card-hover group">
 
                     <span class="pokemon-id pixel-font">
-                        #{{ pokemon.get("id") }}
+                        #{{ pokemon.id }}
                     </span>
 
                     <div class="pokemon-image-wrapper">
                         <div class="pokemon-image-glow"></div>
-                        <img src="{{ pokemon.get('sprites').get('front_default') }}"
-                            alt="Imagen de {{ pokemon.get('name') }}" class="pokemon-image" />
+                        <img src="{{ pokemon.sprites.get('front_default') }}"
+                            alt="Imagen de {{ pokemon.name }}" class="pokemon-image" />
                     </div>
 
                     <h2 class="pokemon-name font-ubuntu">
-                        {{ pokemon.get("name") }}
+                        {{ pokemon.name }}
                     </h2>
 
                     <div class="pokemon-types">
-                        {% set tipo = pokemon.get("types")[0].upper() %}
+                        {% set tipo = pokemon.types[0].upper() %}
                         <span class="type-badge type-{{ tipo | lower }} pixel-font text-shadow-custom">
                             {{ tipo }}
                         </span>
 
-                        {% if pokemon.get("types")[1] %}
-                        {% set tipo2 = pokemon.get("types")[1].upper() %}
+                        {% if pokemon.types[1] %}
+                        {% set tipo2 = pokemon.types[1].upper() %}
                         <span class="type-badge type-{{ tipo2 | lower }} pixel-font text-shadow-custom">
                             {{ tipo2 }}
                         </span>

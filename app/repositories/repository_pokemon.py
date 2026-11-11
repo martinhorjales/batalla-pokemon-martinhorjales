@@ -8,8 +8,7 @@ from app.models.pokemon import Pokemon
 class PokemonRepository:
 
     def ruta_datos(self):
-        ruta = Path(__file__).resolve().parent.parent / \
-            "data" / "pokemons-starters.json"
+        ruta = Path(__file__).resolve().parent.parent.parent / "data" / "pokemons-starters.json"
         return ruta
 
     def carga_datos(self):
@@ -26,7 +25,7 @@ class PokemonRepository:
     def obtener_nombre_pokemons(self):
         pokemons = []
         for pokemon in self.carga_datos():
-            pokemons.append(pokemon.name)
+            pokemons.append(pokemon.get("name"))
         return pokemons
 
     def obtener_pokemon_por_id(self, id):
