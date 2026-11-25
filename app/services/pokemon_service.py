@@ -10,6 +10,9 @@ class PokemonService:
         else:
             return False
 
+    def carga_datos(self):
+        return self.repo.carga_datos()
+
     def devolver_pokemons(self):
         return self.repo.obtener_pokemons()
 

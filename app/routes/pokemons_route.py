@@ -1,7 +1,7 @@
 from functools import wraps
 import random
 from flask import Blueprint, redirect, render_template, request, session, url_for
-from app.deps import POKEMON_REPOSITORY
+from app.deps import POKEMON_SERVICE
 
 pokemon_bp = Blueprint("pokemon", __name__)
 
@@ -20,12 +20,12 @@ def listadoPokemons():
         pokemon = request.form.get("pokemon", "")
         
         if pokemon:
-            for p in POKEMON_REPOSITORY.carga_datos():
+            for p in POKEMON_SERVICE.carga_datos():
                 if (p.get("name") == pokemon.lower() or (pokemon.isdigit() and p.get("id") == int(pokemon))):
                     session["pokemon"] = p
                     return redirect(url_for('pokemon.combatir'))
 
-            return render_template("pokemons.html", DATOS=POKEMON_REPOSITORY.carga_datos(), pokemonPermitido=False)
+            return render_template("pokemons.html", DATOS=POKEMON_SERVICE.carga_datos(), pokemonPermitido=False)
 
     tipo = request.args.get("pokemon-type-filter", "").lower()
     min_height = request.args.get("min-height-filter", "")
@@ -43,7 +43,7 @@ def listadoPokemons():
 
     pokemons_filtrados = []
 
-    for p in POKEMON_REPOSITORY.carga_datos():
+    for p in POKEMON_SERVICE.carga_datos():
         if tipo and tipo.lower() not in p.get("types", []):
             continue
 
@@ -63,7 +63,7 @@ def listadoPokemons():
 @pokemon_bp.route("/pokemons/ID/<int:id>")
 @login_required
 def listarPokemon(id):
-    pokemon_seleccionado = POKEMON_REPOSITORY.obtener_pokemon_por_id(id)
+    pokemon_seleccionado = POKEMON_SERVICE.devolver_pokemon_por_id(id)
 
     if (pokemon_seleccionado == None):
         return render_template("error-pokemon.html")
@@ -84,7 +84,7 @@ def combatir():
     else:
         pokemon_data = pokemon_session
 
-    listaPokemons = POKEMON_REPOSITORY.obtener_nombre_pokemons()
+    listaPokemons = POKEMON_SERVICE.devolver_nombre_pokemons()
 
     nombre_jugador = pokemon_data.get("name")
     if nombre_jugador in listaPokemons:
@@ -97,9 +97,9 @@ def combatir():
         session["pokemon"] = [pokemon_data, ataquesRandom]
 
     if not session.get('pokemonRival'):
-        for p in POKEMON_REPOSITORY.carga_datos():
+        for p in POKEMON_SERVICE.carga_datos():
             if p.get("name") == pokemonRival:
                 session["pokemonRival"] = p
                 break
 
-    return render_template("batalla-pokemon.html", DATOS=POKEMON_REPOSITORY.carga_datos())
+    return render_template("batalla-pokemon.html", DATOS=POKEMON_SERVICE.carga_datos())
