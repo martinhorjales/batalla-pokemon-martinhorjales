@@ -15,7 +15,7 @@ class PokemonRepository:
         with self.ruta_datos().open(encoding="utf-8") as f:
             datos = json.load(f)
         return datos
-
+    
     def obtener_pokemons(self):
         pokemons = []
         for pokemon in self.carga_datos():

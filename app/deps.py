@@ -3,4 +3,4 @@ from app.services.pokemon_service import PokemonService
 
 
 POKEMON_REPOSITORY = PokemonRepository()
-POKEMON_SERVICE = PokemonService()
+POKEMON_SERVICE = PokemonService(POKEMON_REPOSITORY)
